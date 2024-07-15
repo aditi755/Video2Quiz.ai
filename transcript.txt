@@ -1,234 +1,311 @@
-Shad CN uui has been taking over the web
-dev industry and with this new release
-it #39;s looking like it #39;s going to get even
-further I am so hyped with all the work
-shad and crew have been putting into
-this project and I am really hyped about
-what they #39;ve just added I #39;m already a
-pretty big user and if you want to hear
-more about why I #39;m so hyped on Shad let
-me know in the comments and I #39;ll be sure
-to make that video soon but for now I
-just want to talk about what #39;s changing
-because there #39;s some really cool stuff
-in this release without further Ado
-let #39;s take a look the latest Shaden
-release the main exciting thing in this
-release since they #39;re a component
-library is the new components and
-there #39;s some really cool elaborate stuff
-here first we have a carousel yes
-finally a carousel as part of Shad UI
-this is really exciting stuff to finally
-have and as per always this isn #39;t a
-library you install and depend on a
-bunch of dependencies of this is source
-code that you can copy and it #39;s really
-nice they give you all of the source
-code and the react stuff you need in
-order to build this correctly and that
-when you add it to your app it works as
-you expect it #39;s built on top of the
-embla carousel which is a lightweight
-Carousel library with fluid motion and
-great swipe Precision that #39;s dope cuz
-that means it will work well on mobile
-too and again like you could go build
-this yourself and I #39;m sure a lot of
-people will and many of them probably
-should but there are really good
-standardized solutions for so many
-problems from all the weird
-accessibility stuff radx does to all the
-weird touch behaviors that emble
-Carousel probably does having Shad
-standardized all of these with reusable
-components that live in your codebase
-not this Library gives you both the
-benefits of these standards and the
-flexibility of having your own
-components they also added a drawer the
-drawer is super compelling as well
-making a good drawer component that
-slides up at the bottom that is the
-right behaviors on mobile where you can
-slide it down when it #39;s done and it
-feels good with these big cancel and
-submit buttons all handling like page
-layout sizing and properly is
-obnoxious look at how smooth that is
-that #39;s dope good stuff very exciting
-they also have pagination which crazy
-enough they didn #39;t have before
-previously you would have to Define
-these things yourself I know I #39;ve had to
-build a lot of pagination components in
-my time and it #39;s really nice to see
-someone build a generic that I don #39;t
-have to worry about anymore kind of
-funny that when I clicked that it just
-brought me to top of the page but really
-nice that they #39;ve built proper
-pagination all necessary behaviors as
-well as letting you bring in your own
-link components when you use it really
-really cool stuff dope to see we also
-have a resizable and I have feelings
-because doing rizab ility properly and
-react is a thing I have a lot of
-experience with if you haven #39;t already
-watched my video about the coolest
-project I ever built the vast majority
-of that project was making good
-resizable behaviors with drag and drop
-on top of it inside of react I #39;ll
-quickly show you this is mod view this
-is one of the most absurd drag and drop
-experiences I know of in modern web this
-whole UI is customizable I can hide the
-sidebar I can move things different
-places resize them grab things from the
-sidebar move things to the sidebar drag
-them around the sidebar and getting all
-of these behaviors correct was
-incredibly difficult but as a result we
-built an awesome user experience that as
-far as I #39;m concerned hasn #39;t been taught
-by any moderation tools to date we built
-this because moderators have a lot of
-needs and we needed to solve those as
-best we could the library we build a lot
-of this with react Mosaic I had to fork
-and build a ton of stuff on top of to
-make this work at all and now is just a
-component that #39;s built into Shad UI that
-does most of this work for you and again
-the code is there for you to grab as you
-need it this default UI resizable bit is
-in your own code base you have the
-ability to use it however you want
-change it however you need and build
-something really really cool and it #39;s
-all built on top of react resizable
-panels by Brian vau who is an absolute
-Legend mostly known for building the
-react Dev tools Chrome extension now
-he #39;s at replay helping build really deep
-developer tools for react wonderful Dude
-incredibly talented engineer he built
-one of the best ways to do resizable
-panels and now there #39;s an abstraction as
-part of Shad UI super dope and now we
-have sonor I don #39;t quite know what sonor
-is but what I do know is it #39;s really
-good toast notifications so if I click
-this we get this really fancy nice slow
-popup of the toast with good behaviors
-for hiding it and getting rid of it you
-even see this button has an onclick for
-toast event has been created description
-action label onclick all of those things
-really good stuff a lot of these
-behaviors that are hard to get right
-especially once you #39;re dealing with
-mobile have been solved oh open multiple
-oh okay I see why you said to do that do
-you see how good that
-looks oh
-God yeah that #39;s really good I #39;m
-sorry I did not expect that to be that
-good but again that this is the benefit
-of shad youi and the whole Shad CM
-package is all of these things are done
-well Tastefully and corre irly they
-don #39;t have much personality that #39;s the
-big thing you #39;re missing here if you
-want a website that stands out this
-isn #39;t the way to do that but this is all
-of the pieces you need to make something
-great and I you have no idea how hard it
-is to build these things correctly
-unless you #39;ve done it having this all as
-part of something you can just npm
-install is incredible also of note you
-just watched it in a 30 FPS video it
-looks really good on this 120 FPS screen
-enough about the components cuz they
-also did some pretty big changes to the
-CLI I think the CLI was an incredible
-addition to Shad CN because previously
-you would copy paste the component into
-your codebase yourself once v0 is
-introduced which if you #39;re not already
-familiar I have a whole video about it
-it #39;s vel #39;s AI generation for components
-this need to have a good way for you to
-have all the necessary files from Shad
-CN UI when you make something so like if
-I click on an example here you #39;ll see in
-the code a lot of the stuff here is
-coming from @/ component UI these are
-all Shad UI things now that there #39;s a
-CLI and that can be called and included
-as part of the v0 command they #39;re able
-to generate any of the missing pieces
-that you might not have in your code
-base yet but again these are in your
-code base these aren #39;t packages being
-imported it #39;s a CLI running to create
-the files necessary in your code base so
-you still own it and I think it #39;s really
-cool they made that a CLI so now you can
-install and add specific components that
-you #39;re missing without having to copy
-paste a bunch of different code it also
-allows for these components have
-different levels of complexity different
-levels of importing behaviors and all
-done properly with just running a
-command the CLI was not the best
-experience when I tried it it made some
-assumptions about where things were that
-were incorrect I think it can do that
-better with inference but at the time it
-was still revolutionary and I #39;m really
-excited to see how it iterates so let #39;s
-see what they #39;ve added you can now
-configure a custom Tailwind prefix and
-the CLI will automatically prefix your
-utility classes that #39;s really nice so if
-you only want Tailwind for these things
-or if you want to integrate it with
-something else like docusaurus or nextra
-it #39;s much easier to do that if you can
-automatically apply a prefix to all of
-the things that you need the CI can now
-also detect tailin config TS which is
-nice cuz a lot of these things miss the
-fact that your tailin file might be in
-typescript they fix that and they also
-add the Tex version of the config good
-stuff this is a huge update and I am
-genuinely really hyped I #39;ll be using a
-lot of these components for a lot of
-different things and unlike other things
-when they update we don #39;t have to go and
-refactor a bunch of stuff or install
-this new package and deal with a bunch
-of breaking things the change is there
-are now additional components you can
-use and that #39;s really cool because Shad
-CN UI isn #39;t your traditional Library
-it #39;s a pile of components to help you
-get started and build better
-applications faster you want to hear
-more about why I think Shad CN UI is so
-cool and different let me know in the
-comments I #39;ll do a whole dedicated video
-about it soon but for now want you to
-see these updates because I am really
-hyped thank you guys as always if you
-want to hear me talk about CSS Mor I #39;ll
-pin that video in the corner here good
-to see you as always I #39;ll see you in the
-next one peace NS
+Hi, I #39;ve finally gotten to the bottom of 
+one of the most interesting topics for me.
+This is how React works under the hood.
+Every day we use Hooks, Lifecycle, JSX, 
+Synthetic Events, and confidently talk
+about the performance
+of our project.
+This confidence was generated by excellent 
+React documentation, and just a huge number of
+hours spent writing projects on this technology.
+But the question is how well we understand 
+what is really going on inside React.
+how we get 60 frames per second even with a huge 
+number of interactive elements on the screen.
+That #39;s why I chose React Reconciliation 
+as the first topic for this playlist.
+As a source of information, I used the official 
+React documentation and an article by Andrew
+Clark, co-founder of the Redux.
+He presented similar speech at 
+the React Next 2016 conference.
+Andrew works for the React core team, therefore 
+there is definitely confidence in this material.
+All links will be in the description.
+I would start with a brief definition from the 
+article Reconciliation is the algorithm behind
+what is popularly understood as the virtual DOM.
+Let #39;s try to understand in 
+more detail how it works.
+It all starts with the basic unit, the node.
+From them, using a set of render methods, a 
+whole tree of react elements is assembled, which
+describes the entire state of the 
+application and is stored in memory.
+And this tree is called current.
+Then this tree is fed into 
+the rendering environment.
+In the case of the web, this 
+This environment will transform
+this tree into a set of DOM operations
+needed to render the current changes.
+It prioritizes DOM operations according to 
+the urgency of their getting to the user.
+When the website is first loaded, the rendering 
+environment renders the entire DOM tree, and
+the user can finally see the first result of
+all these manipulations and 
+can press the  quot;Hi quot; button.
+Clicking the button leads to a change 
+in our website, and as a result,
+a new tree is built, and
+it is called Work-in-Progress.
+Next, we compare the work-in-progress tree with 
+the current tree and calculate the difference
+between them, and only the difference between 
+these trees is given to the rendering environment
+and then the already familiar process 
+of turning the difference into a
+set of DOM operations
+and prioritizing them.
+And as a result, these operations 
+will update the DOM tree of our
+website and the user will finally
+see that the bruise greeted him.
+Oh yes, I almost forgot, the work-in-progress 
+tree becomes the current tree.
+This is a fairly general instruction describing 
+the mechanism of reconciliation, but it has
+many interesting details.
+Let #39;s try to go through some of them.
+For example, React core developers have divided 
+the tree comparison engine and the rendering
+environment into separate phases, so that React 
+DOM and React Native can use their own rendering
+engines when using the same comparison 
+engine that is in React core.
+The next point is to work with tree.
+There are several general solutions to the 
+algorithmic problem of transforming one tree into
+another with a minimum number of operations.
+However, advanced algorithms have a 
+complexity of the order of O(n^3),
+where n is the number
+of elements in the tree.
+If 1 ,000 nodes were mounted, this algorithm 
+would require a billion comparisons.
+This is too expensive.
+So React core developers chose a heuristic 
+algorithm of the order of O(n).
+With it, 1 ,000 nodes requires 1 ,000 comparisons.
+It sounds much more attractive.
+Let #39;s figure out what a heuristic algorithm is.
+Heuristic is a technique designed for solving 
+a problem more quickly, when classic methods
+are too slow, or for finding an approximate 
+solution, when classic methods fail to find any
+exact solution.
+Raveli speaking, this algorithm is not effective 
+for all cases, and the React core team has
+made several assumptions to 
+make this algorithm work.
+First, two elements with different 
+types will produce different trees.
+Second, the developer can specify which child 
+elements can remain stable between different
+renderers using the key property, however, in 
+practice, these assumptions are true for most
+of the cases.
+For example, in the following code, diff 
+is the parent and the counter is the child.
+And then there were updates, and we changed the 
+type of the parent element from diff to span and
+the child remained the same component counter.
+Despite this, diff and span are different types, 
+and the entire tree starting from this element
+will be unmounted and their state will 
+be destroyed and then mounted again.
+Let #39;s think about what it means 
+for us as a React developers.
+For example, we have a pure component that 
+is responsible for displaying a picture.
+Perhaps it has some kind of logic, for example 
+checking for its presence in the browser cache.
+And if the cache doesn #39;t include it, we need to 
+show a stubbed picture during the loading state,
+or maybe some other logic inside.
+This component is used in 
+many places of the project.
+For instance, in an avatar.
+The user has the opportunity to 
+switch his avatar to the editing mode.
+It means that controls appear next to it.
+In our case, it is to delete the 
+picture or to upload a new one.
+Of course, we expect that when switching from 
+the avatar view mode to the edit mode, the image
+component itself will not be updated because 
+it is a pure component and we pass the same
+props
+to it.
+But it #39;s not so simple.
+We need to wrap the image 
+component in an additional
+diff in order to do absolute positioning
+the controls on top of the 
+picture itself in the corner.
+As a result of switching the mode, the algorithm 
+begins to revise our components from top to
+bottom.
+The first was a diff, and it remained.
+Then there was the image component, 
+and now again some kind of diff.
+So there was a change of types.
+This means that the past image component 
+is completely removed from the tree.
+It means ComponentWillOnMount is 
+called from the previous instance.
+And then the tree is rebuilt, which means that 
+a new instance is created for the image class.
+And RenderMethod and ComponentDidMount are 
+called, but we didn #39;t count on it at all.
+To fix this problem, let #39;s 
+just remove the extra diff.
+Let #39;s say we figured out how to implement 
+it without the diff, and add only controls
+and editing
+mode.
+In this case, it will really work.
+Our image component will not be 
+mounted and unmounted every time.
+But then, I decided to experiment and added 
+controls, not under the image, but above it.
+It is small changes, but again, the problem 
+returned with the fact that the image component
+was unmounted and mounted when switching the mode.
+And it sounds logical, we again compare from top 
+to bottom, and see where the picture was, now
+the controls, so it was defined as a change 
+in types, and again everything went wrong.
+At the same time, if you change the code a little, 
+and bring it to the form with single return,
+and use a logical operator, then everything works.
+It works as now the place is reserved for boolean, 
+although it is not displayed to the user, or
+for the controls, but the position of 
+the image component is always the same.
+But let #39;s return to the case with two returns.
+To solve this problem, we can 
+use the second assumption.
+The developer can specify which 
+child elements can stay the same
+between different renders
+using property key.
+It means if we specify the key property for the 
+image component, then React will know that the
+position of the component has changed, and your 
+code will work again as you originally expected.
+And of course, the first thought was 
+to try to use the key and wrap the
+editing case in an additional
+diff, but it doesn #39;t work.
+Key works only within the 
+same depth level of nodes.
+Knowing these assumptions, you can easily solve 
+the problem with strange behavior at first
+glance.
+But do not forget, thanks to this assumption,
+React was able to speed up 
+the algorithm for traversing
+the tree from the order of the
+O(n^3) to the O(n) order.
+And it is very important.
+The next very important thing that 
+was mentioned in this video is the
+prioritization of DOM
+operations.
+This is really a very important and very 
+complex thing, because just think about it.
+We want the application not to lag,
+as in games we expect 60 frames 
+per second for a smooth picture.
+To achieve it, you need to update 
+the frames every about 16 ms. Now
+imagine that the user has made
+a 240 ms interface update.
+To prevent all this from starting to lag, the 
+React Core team decided to split the interface
+update into smaller DOM operations, the 
+so-called units, and prioritize them.
+Because the hover animation of the button seems 
+to be a higher priority than updating data in
+a block that is not even in 
+the viewport at the moment.
+Therefore, React sorted the 
+tasks for you and showed the
+animation in the first frames and postponed
+some less prioritized tasks for the next frames.
+To implement this logic, the React team uses 
+two methods, requestAnimationFrame for higher
+priority tasks that need to be performed literally 
+in the next frame, and requestIdleCallback
+for low priority tasks that can be 
+performed while the application is idle.
+More details can be found at 
+the links in the description.
+As you see, the main difficulty of such a task 
+is to priorities these small DOM operations.
+You can even find a separate package 
+in React Repository called scheduler.
+If we open it, we will see 
+a field called scheduler
+priorities.js, which includes priority
+constants, which we discussed earlier.
+As you can see, there is 
+an idle priority constant.
+It means this kind of task is performed 
+while the application is idle.
+There is a low normal priority and others.
+All this allows you to determine 
+the order of DOM operations.
+And if we go back and open the 
+scheduler.js file and scroll a little,
+we will even see the timeouts
+of these priorities.
+The numbers look pretty high, as much as 10 
+seconds of waiting for low priority tasks.
+And let #39;s scroll a little lower.
+There is, we see the timeouts returns 
+depending on the priorities of the task.
+But I #39;m not sure if this code is currently used 
+in production, or if it #39;s just some drafts.
+Since we see prefix unstable 
+on many exported methods,
+And if you search globally by the repository,
+you will see that priority constants 
+is duplicated in several places.
+Probably, active work is still 
+underway to find the best solutions.
+The last point which I would like to talk 
+quite a bit is about the history of the React.
+In version 16, the long-awaited project called 
+Fiber was finally introduced into React, which
+made it possible to plan which operations with 
+the DOM need to be performed now, which can be
+postponed a little, and which are no longer 
+relevant at all and cannot be performed.
+and as a result, the user gets his 
+cherished 60 frames per second.
+This algorithm is, of course, much 
+more than just a React scale scheduler.
+It started as an experiment and was written from 
+scratch, and after two years it was merged into
+the repository, which 
+personally made me very happy.
+I remember there was even 
+an own site with countdown
+to the release of Fiber was introduced.
+What #39;s it all about?
+This is an example where simple 
+migration of your project to a
+newer version of the library can
+improve your project #39;s performance.
+Therefore, it is always worth keeping an eye out 
+for new experiments from your favorite libraries
+and perhaps you can benefit your current 
+project without spending a lot of money on it.
+If you liked this video, I will be grateful if 
+you press like button and subscribe to the channel
+because this is not the last video and many 
+other useful things await you on our channel.
+Bye bye.
