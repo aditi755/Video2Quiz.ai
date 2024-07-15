@@ -1,0 +1,234 @@
+Shad CN uui has been taking over the web
+dev industry and with this new release
+it #39;s looking like it #39;s going to get even
+further I am so hyped with all the work
+shad and crew have been putting into
+this project and I am really hyped about
+what they #39;ve just added I #39;m already a
+pretty big user and if you want to hear
+more about why I #39;m so hyped on Shad let
+me know in the comments and I #39;ll be sure
+to make that video soon but for now I
+just want to talk about what #39;s changing
+because there #39;s some really cool stuff
+in this release without further Ado
+let #39;s take a look the latest Shaden
+release the main exciting thing in this
+release since they #39;re a component
+library is the new components and
+there #39;s some really cool elaborate stuff
+here first we have a carousel yes
+finally a carousel as part of Shad UI
+this is really exciting stuff to finally
+have and as per always this isn #39;t a
+library you install and depend on a
+bunch of dependencies of this is source
+code that you can copy and it #39;s really
+nice they give you all of the source
+code and the react stuff you need in
+order to build this correctly and that
+when you add it to your app it works as
+you expect it #39;s built on top of the
+embla carousel which is a lightweight
+Carousel library with fluid motion and
+great swipe Precision that #39;s dope cuz
+that means it will work well on mobile
+too and again like you could go build
+this yourself and I #39;m sure a lot of
+people will and many of them probably
+should but there are really good
+standardized solutions for so many
+problems from all the weird
+accessibility stuff radx does to all the
+weird touch behaviors that emble
+Carousel probably does having Shad
+standardized all of these with reusable
+components that live in your codebase
+not this Library gives you both the
+benefits of these standards and the
+flexibility of having your own
+components they also added a drawer the
+drawer is super compelling as well
+making a good drawer component that
+slides up at the bottom that is the
+right behaviors on mobile where you can
+slide it down when it #39;s done and it
+feels good with these big cancel and
+submit buttons all handling like page
+layout sizing and properly is
+obnoxious look at how smooth that is
+that #39;s dope good stuff very exciting
+they also have pagination which crazy
+enough they didn #39;t have before
+previously you would have to Define
+these things yourself I know I #39;ve had to
+build a lot of pagination components in
+my time and it #39;s really nice to see
+someone build a generic that I don #39;t
+have to worry about anymore kind of
+funny that when I clicked that it just
+brought me to top of the page but really
+nice that they #39;ve built proper
+pagination all necessary behaviors as
+well as letting you bring in your own
+link components when you use it really
+really cool stuff dope to see we also
+have a resizable and I have feelings
+because doing rizab ility properly and
+react is a thing I have a lot of
+experience with if you haven #39;t already
+watched my video about the coolest
+project I ever built the vast majority
+of that project was making good
+resizable behaviors with drag and drop
+on top of it inside of react I #39;ll
+quickly show you this is mod view this
+is one of the most absurd drag and drop
+experiences I know of in modern web this
+whole UI is customizable I can hide the
+sidebar I can move things different
+places resize them grab things from the
+sidebar move things to the sidebar drag
+them around the sidebar and getting all
+of these behaviors correct was
+incredibly difficult but as a result we
+built an awesome user experience that as
+far as I #39;m concerned hasn #39;t been taught
+by any moderation tools to date we built
+this because moderators have a lot of
+needs and we needed to solve those as
+best we could the library we build a lot
+of this with react Mosaic I had to fork
+and build a ton of stuff on top of to
+make this work at all and now is just a
+component that #39;s built into Shad UI that
+does most of this work for you and again
+the code is there for you to grab as you
+need it this default UI resizable bit is
+in your own code base you have the
+ability to use it however you want
+change it however you need and build
+something really really cool and it #39;s
+all built on top of react resizable
+panels by Brian vau who is an absolute
+Legend mostly known for building the
+react Dev tools Chrome extension now
+he #39;s at replay helping build really deep
+developer tools for react wonderful Dude
+incredibly talented engineer he built
+one of the best ways to do resizable
+panels and now there #39;s an abstraction as
+part of Shad UI super dope and now we
+have sonor I don #39;t quite know what sonor
+is but what I do know is it #39;s really
+good toast notifications so if I click
+this we get this really fancy nice slow
+popup of the toast with good behaviors
+for hiding it and getting rid of it you
+even see this button has an onclick for
+toast event has been created description
+action label onclick all of those things
+really good stuff a lot of these
+behaviors that are hard to get right
+especially once you #39;re dealing with
+mobile have been solved oh open multiple
+oh okay I see why you said to do that do
+you see how good that
+looks oh
+God yeah that #39;s really good I #39;m
+sorry I did not expect that to be that
+good but again that this is the benefit
+of shad youi and the whole Shad CM
+package is all of these things are done
+well Tastefully and corre irly they
+don #39;t have much personality that #39;s the
+big thing you #39;re missing here if you
+want a website that stands out this
+isn #39;t the way to do that but this is all
+of the pieces you need to make something
+great and I you have no idea how hard it
+is to build these things correctly
+unless you #39;ve done it having this all as
+part of something you can just npm
+install is incredible also of note you
+just watched it in a 30 FPS video it
+looks really good on this 120 FPS screen
+enough about the components cuz they
+also did some pretty big changes to the
+CLI I think the CLI was an incredible
+addition to Shad CN because previously
+you would copy paste the component into
+your codebase yourself once v0 is
+introduced which if you #39;re not already
+familiar I have a whole video about it
+it #39;s vel #39;s AI generation for components
+this need to have a good way for you to
+have all the necessary files from Shad
+CN UI when you make something so like if
+I click on an example here you #39;ll see in
+the code a lot of the stuff here is
+coming from @/ component UI these are
+all Shad UI things now that there #39;s a
+CLI and that can be called and included
+as part of the v0 command they #39;re able
+to generate any of the missing pieces
+that you might not have in your code
+base yet but again these are in your
+code base these aren #39;t packages being
+imported it #39;s a CLI running to create
+the files necessary in your code base so
+you still own it and I think it #39;s really
+cool they made that a CLI so now you can
+install and add specific components that
+you #39;re missing without having to copy
+paste a bunch of different code it also
+allows for these components have
+different levels of complexity different
+levels of importing behaviors and all
+done properly with just running a
+command the CLI was not the best
+experience when I tried it it made some
+assumptions about where things were that
+were incorrect I think it can do that
+better with inference but at the time it
+was still revolutionary and I #39;m really
+excited to see how it iterates so let #39;s
+see what they #39;ve added you can now
+configure a custom Tailwind prefix and
+the CLI will automatically prefix your
+utility classes that #39;s really nice so if
+you only want Tailwind for these things
+or if you want to integrate it with
+something else like docusaurus or nextra
+it #39;s much easier to do that if you can
+automatically apply a prefix to all of
+the things that you need the CI can now
+also detect tailin config TS which is
+nice cuz a lot of these things miss the
+fact that your tailin file might be in
+typescript they fix that and they also
+add the Tex version of the config good
+stuff this is a huge update and I am
+genuinely really hyped I #39;ll be using a
+lot of these components for a lot of
+different things and unlike other things
+when they update we don #39;t have to go and
+refactor a bunch of stuff or install
+this new package and deal with a bunch
+of breaking things the change is there
+are now additional components you can
+use and that #39;s really cool because Shad
+CN UI isn #39;t your traditional Library
+it #39;s a pile of components to help you
+get started and build better
+applications faster you want to hear
+more about why I think Shad CN UI is so
+cool and different let me know in the
+comments I #39;ll do a whole dedicated video
+about it soon but for now want you to
+see these updates because I am really
+hyped thank you guys as always if you
+want to hear me talk about CSS Mor I #39;ll
+pin that video in the corner here good
+to see you as always I #39;ll see you in the
+next one peace NS
