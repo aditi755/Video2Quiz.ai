@@ -198,7 +198,7 @@ export default function VideoToQuiz() {
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight">How it Works</h2>
             <p className="text-muted-foreground text-lg">
               Our intuitive tool makes it easy to convert any YouTube video into an engaging quiz. Simply enter the
-              video link and we'll handle the rest.
+              video link and we will handle the rest.
             </p>
           </div>
           <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
