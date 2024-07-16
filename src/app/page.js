@@ -4,7 +4,11 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { TypewriterEffect } from "@/components/ui/typewriter-effect";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
+import { CardContainer, CardItem, CardBody } from "@/components/ui/3d-card";
+import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
+import { HoverEffect} from "@/components/ui/card-hover-effect";
 import axios from "axios";
 
 export default function VideoToQuiz() {
@@ -89,6 +93,29 @@ export default function VideoToQuiz() {
     setViewSavedQuiz(null)
   }
 
+  const words = [
+    { text: "Engage your audience and improve knowledge retention with our powerful video to quiz conversion tool." },
+  ];
+
+  const items = [
+    {
+      title: "Upload Video",
+      description: "Paste the link to your YouTube video and let us do the rest.",
+      icon: <UploadIcon className="w-8 h-8 mb-4" />,
+    },
+    {
+      title: "Answer Quiz",
+      description: "Get generated quiz and attempt questions to check your knowledge.",
+      icon: <FilePenIcon className="w-8 h-8 mb-4" />,
+    },
+    {
+      title: "Saved Quizzes",
+      description: "Review the quiz whenever you want as it gets saved automatically.",
+      icon: <ShareIcon className="w-8 h-8 mb-4" />,
+    },
+  ];
+
+
 
     return (
       <div className="w-full min-h-screen bg-background text-foreground">
@@ -119,17 +146,36 @@ export default function VideoToQuiz() {
               <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
                 Convert YouTube Videos to Interactive Quizzes
               </h1>
-              <p className="text-muted-foreground text-lg">
-                Engage your audience and improve knowledge retention with our powerful video to quiz conversion tool.
-              </p>
+
+       <TypewriterEffect
+        words={words}
+        className="text-muted-foreground text-lg"
+      />
+
             </div>
-            <img
-              src="/pic.png"
-              width={600}
-              height={400}
-              alt="Hero Image"
-              className="rounded-lg overflow-hidden"
-            />
+
+<HoverBorderGradient
+      className="max-w-xl"
+      containerClassName="rounded-lg overflow-hidden"
+      duration={1}
+      clockwise={true}
+    >
+      <CardContainer className="perspective">
+        
+          <CardItem className="bg-white p-4 rounded-lg shadow-lg">
+          <img
+          src="/pic.png"
+          width={600}
+          height={400}
+          alt="Hero Image"
+          className="rounded-lg overflow-hidden "
+        />
+          </CardItem>
+       
+      </CardContainer>
+    </HoverBorderGradient>
+
+
           </section>
           <section className="container mx-auto px-4 md:px-6 py-12 md:py-24 bg-muted">
             <div className="max-w-3xl mx-auto text-center space-y-4">
@@ -156,8 +202,20 @@ export default function VideoToQuiz() {
                 <p className="text-muted-foreground">Review the quiz whenever you want as it gets saved automatically.</p>
               </div>
             </div>
+
+{/* <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+      {items.map((item, idx) => (
+        <HoverEffect key={idx} items={[item]} className="hoverEffect">
+          <div className="bg-background p-6 rounded-lg shadow-sm">
+            {item.icon}
+            <h3 className="text-xl font-bold mb-2">{item.title}</h3>
+            <p className="text-muted-foreground">{item.description}</p>
+          </div>
+        </HoverEffect>
+      ))}
+    </div> */}
           </section>
-          
+
 <section className="container mx-auto px-4 md:px-6 py-12 md:py-24 bg-muted">
           <div className="max-w-3xl mx-auto text-center space-y-4">
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Transform Your Learning Experience</h2>
