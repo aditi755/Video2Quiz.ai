@@ -1,206 +1,566 @@
-Hi!
-Starting from React version 16.8, hooks have 
-become a part of our everyday development. This
-functionality has sparked a lot of debates, 
-and there are reasons for it. In this video,
-we will discuss one of the most common 
-misconceptions about using hooks.
-Let #39;s consider 2 options for writing a component. 
-The first option is to use classes. In this
-option, we added a method to the class, and 
-when an instance of the class is created,
-this method is created once, and in the render, 
-we already use a reference to this method. Thus,
-with each render, we always refer to the same 
-reference and do not recreate the class method.
-This construct was familiar and understandable 
-to everyone who has been in the profession for
-a long time, even if you recently came to 
-React from another programming language.
-The second way to create a component is 
-by using a function. In this approach,
-to create an onClick handler, we define the 
-body of it directly inside the render because
-the entire function body is the render 
-itself. There is no other option if you
-want to use props. And here is where we start 
-to feel uncomfortable. How can it be that we
-should create a new function on every render? It 
-seems like a step backwards compared to classes.
-To find out the answer on the question, 
-I’ve opened legacy React documentation and
-found the following question in the Q amp;A section:
-Are Hooks slow because of 
-creating functions in render?
-No. In modern browsers, the raw performance of
-closures compared to classes doesn’t differ 
-significantly except in extreme scenarios.
-In addition, consider that the design of 
-Hooks is more efficient in a couple ways:
-Hooks avoid a lot of the overhead that classes 
-require, like the cost of creating class instances
-and binding event handlers in the constructor.
-Idiomatic code using Hooks doesn’t need the deep
-component tree nesting that is prevalent in 
-codebases that use higher-order components,
-render props, and context. With smaller 
-component trees, React has less work to do.
-According to the documentation, creating a class 
-instance for React is such an expensive operation
-that creating a function for each render 
-is orders of magnitude cheaper. Moreover,
-the fact that the tree becomes deeper 
-when using higher-order components like
-Redux #39;s connect or MobX #39;s infinite 
-observers is not pleasing at all.
-This idea is a bit difficult for developers 
-to accept because we are used to optimizing
-everything, and now we need to make the code 
-less optimized that it was with classes. And
-as a result, we start looking for ways to get 
-back to the previous level of optimizations.
-And the first thing that is googled is 
-to start using the useCallback hook. And
-many people start actively using it in their 
-projects
-The question is only how well 
-we understand how useCallback
-works. Let #39;s conduct a small quiz for this:
-In one case, we’ve created a component 
-where it creates someFunction callback
-on each render. And we call 
-it when the button is clicked.
-In the second case, we have 
-exactly the same component,
-but we’ve decided to wrap the callback in 
-useCallback. For the user, nothing has changed,
-console.log is still called 
-when the button is clicked.
-So, now the actual question. In which way 
-someFunction callback created less frequently?
-Take a minute to think.
-And the correct answer is neither! Yes, exactly, 
-useCallback did not give us any optimization,
-the function is created exactly as many 
-times as before the optimization. Moreover,
-we actually worsened the 
-performance of our component.
-What can fool you is the perception that 
-useCallback is some kind of black box where
-you pass a callback, something happens 
-with it, and then you have happiness. But
-let #39;s consider how it actually works. First, 
-let #39;s do a typeof check on this black box,
-and naturally, we get function. 
-It was obvious from the syntax.
-To understand how the black box 
-works, let #39;s write the useCallback
-implementation ourselves. This is a function 
-that takes 2 parameters: callback and deps.
-Next, we need to store this callback 
-and dependencies somewhere so that
-we can return the same callback 
-function on each subsequent call.
-Now let #39;s consider different cases. If the 
-dependencies do not exist either in prevState
-or in the new data, then we need to save the 
-current parameters and return the callback.
-But if the dependencies exist, then 
-we compare the arrays using a certain
-function and if they match, we 
-return the memoized function.
-And if the dependencies do not match,
-then we again save the parameters 
-and return the current callback.
-It seems like we have covered all the 
-cases. What conclusions can we do from this?
-The useCallback function, like any other function, 
-is called on each render, and each render receives
-a new function and a new array of dependencies as 
-a callback parameter. Which we either throw away,
-if the dependencies before and after are equal, 
-or save them in the repository for future use
-Let #39;s now look at this function from 
-the component side. Now we know that
-useCallback is just a function and we can 
-extract the passed parameters into own
-variables. Here it becomes quite obvious that 
-we create not only a function for each render,
-but also an array with dependencies, 
-and then pass all this to use Callback.
-If we just comment out the dependency creation 
-and the useCallback call and pass the callback
-parameter directly to onClick, then it seems that 
-the performance of the component should improve,
-because we have removed the intermediary, 
-which was of no use to the performance.
-To put an end to this story, let #39;s also remove the 
-commented code and we end up back to the initial
-situation. When we just create a function for each 
-render. It turns out that in this case, using the
-useCallback hook does not improve the performance, 
-but rather the opposite - it worsens it.
-It turns out that we are using useCallback 
-incorrectly. To understand this, let #39;s refer to
-the documentation. I decided to show you a piece 
-of text from the legacy documentation. Because
-it is better works for our video
-Returns a memoized callback.
-Pass an inline callback and an array of 
-dependencies. useCallback will return
-a memoized version of the callback that only 
-changes if one of the dependencies has changed.
-This is useful when passing callbacks to 
-optimized child components that rely on
-reference equality to prevent unnecessary 
-renders (e.g. shouldComponentUpdate).
-I.e., the main idea is not to improve the 
-performance in a particular component,
-but rather it is only beneficial if the callback 
-is passed as props. Let #39;s look at another example.
-Let #39;s say we have a list of cars that we want to 
-display. We have a Cars component that receives
-the list of cars via props and draws them one by 
-one using the map method and the Car component.
-Here we needed to add a handler for 
-clicking on a car. We create the
-onCarClick callback and pass it to the 
-Car component. And in this situation,
-for each render of the Cars component, we 
-create a new instance of the onCarClick
-callback. Respectively, no matter if Car 
-is a PureComponent or wrapped in a memo,
-all cars will always be re-rendered, because they 
-get a new instance of the callback each time.
-This is what useCallback is for, 
-if we wrap the callback in a hook,
-then we will have a memoized callback 
-returned in the onCarClick variable,
-even though we pass a new instance of the callback into useCallback for each render
-Thus, all Car components will 
-not be rendered unnecessarily,
-because the reference to the 
-callback will remain the same.
-And if we look inside the Car component
-There we will create another function
-that will link onCarClick and the car object. 
-In this case, there is no use of wrapping the
-callback in useCallback, because we don #39;t care 
-whether it is a reference to a callback from
-the previous render or from the current render, 
-and useCallback as we already know is not free
-This video can be summarized in the following 
-words. Although React supports components as
-classes, it has more maneuvers over acceleration 
-of components as functions. And the ecosystem
-itself is increasingly providing you with hooks 
-as APIs, which is impossible to use in classes.
-And of course, trust react, if they said it #39;s 
-better to create a callback for every render,
-do it, because they are only interested in 
-improving the performance of your project.
-And if you liked our video, be sure to share 
-the link with your colleagues, press the like
-button and subscribe to the channel. There 
-will be a lot more interesting things here.
-Bye
+just learned next 13 and now have to
+learn 14 please don #39;t be so harsh I just
+learned next 13 and now continue to
+learn next 14 changing too much in too
+short of a time are we already at next1
+14 I just finally migrated all my apps
+to
+13 is this supposed to be my week off I
+have been doing so much but I feel like
+I have to talk about this so without
+further Ado let #39;s talk about the truth
+about next 14 I was at nexcom and I will
+disclose versel does sponsor the channel
+they #39;re not sponsoring this video they
+have no idea it #39;s being made that all
+said I think it #39;s important to set the
+record straight with next1 14 because
+it #39;s actually a really boring release I
+know coming from me there are crazy
+things that I probably think are boring
+but nex1 14 did almost nothing there are
+no API changes no significant things you
+should have to alter in your app at all
+it #39;s mostly a stability pass on some
+core features and attempts to make next
+even faster for developers nothing here
+should immediately change the way you
+build apps and there #39;s really nothing
+new to learn what exactly does next1 14
+change and what #39;s all this drama coming
+from this is the official next 14 blog
+post announcement if you watch the
+keynote it actually started slightly
+different with a big slide saying very
+clearly no new apis and I want to
+emphasize that there is nothing new in
+next1 14 that you will have to code
+differently for or around the point of
+next1 14 is to stabilize and push
+forward a lot of these things just
+because there #39;s a major version bump
+doesn #39;t necessarily mean everything is
+changing underneath you and while many
+other authors might like to push that
+this is mostly the next team following
+major releases of node there #39;s a new
+next version for every new node version
+It #39;s that simple anyways what did they
+actually change four core things well
+only three of them are even part of next
+first is Turbo pack which is now more
+stable it #39;s still not quite there yet
+it #39;s passing a lot of their internal
+tests but not 100% yet and I #39;ll be
+honest I still get to get Turbo pack
+running on any of my real projects so
+hopeful excited for the much faster DX
+but we #39;re not there just yet just a huge
+step forward server actions being stable
+is much more interesting though because
+server actions have been controversial
+to say the least uh we #39;ll talk about
+that later on but I just want to go
+through the these one at a time and my
+favorite part partial pre-rendering I #39;ve
+been asking for this for a long time and
+we #39;re going to have to make some
+diagrams to explain just why it is so
+powerful outside of next directly there
+is nextjs learn which is a new education
+resource for people looking to learn
+nextjs discover these new patterns and
+maybe even onboard their teams at their
+companies really cool that they #39;re
+focused on education materials as much
+as they are hyped to see this being a
+focus for the next team but again that #39;s
+making next easier it #39;s not a change to
+next itself so any outrage about that is
+particularly confusing to me so let #39;s go
+through these one at a time the next JS
+compiler turbocharged for my
+understanding the turbopack teams had a
+shift in Focus away from Reinventing the
+entirety of webpack in towards
+addressing the slowest parts of nextjs
+in order to make them compile faster
+with the app router requiring a decent
+bit more compilation on both the back
+end and the front end so to speak sides
+it is nice to see these changes
+happening and from the experimental
+projects I #39;ve played with it in it is
+way faster again sadly I #39;ve not gotten
+it running on any of my real projects a
+big part of that is that the clerk SDK
+does not seem to play nice with turbo at
+the moment I do hope to see that
+addressed in the future though so again
+not a priority just yet cool to see the
+progress but I can #39;t use this nothing #39;s
+changing as far as I #39;m concerned here
+the next section is forms and mutations
+where they start by pointing out that
+next nine introduced API routes I #39;ve
+been using them since around 10 really
+powerful way to introduce an API right
+next to your nextjs code inside of the
+same project you no longer need to spin
+up Express just to have an API endpoint
+really cool stuff but in the end you #39;re
+writing effectively the exact same code
+as you would have if you had an Express
+project you #39;re just collocating the
+files kind of but there #39;s no stronger
+relationship between them and no clarity
+as to how one affects the other unless
+you write a bunch of custom types and
+even then those aren #39;t reliable the next
+team #39;s been working really hard to
+adjust this for a while and we have
+outside of it too I mean look TPC is one
+of the best ways to take advantage of
+those API routes and not have to worry
+about type safety and consistency
+between the endpoints but we #39;re not here
+to talk about trpc we #39;re here to talk
+about the new thing that next didn #39;t
+introduce here but stabilized here which
+is server actions server actions allow
+you to write that server code that does
+whatever you want the server to do
+inside of code that looks like client
+code I want to be very clear about this
+here this is not client code you can #39;t
+write a server action inside of a file
+that goes to the user if this JavaScript
+is accessible to the user this won #39;t
+compile if you write a use server
+function in a use client file it will
+not work it will not compile it will
+yell at you for it the thing that #39;s
+really hard to get your mind around here
+is that this code here this is entirely
+server code it happens to create a form
+that gets sent to the user as HTML but
+any JavaScript you write in this file
+does not go to the user and when the
+user clicks the button to submit it #39;s
+actually posting to this endpoint using
+tradition web standards not an Ajax
+request this is the thing I think is
+tripping people up the most because
+they #39;re looking at this and seeing
+something that they associate with
+servers like a database call right next
+to something they associate with clients
+like jsx but jsx does not necessarily
+mean client side code anymore it means
+something the user might see but it does
+not mean the JavaScript itself is going
+to the user which is a really powerful
+part of this pattern and it #39;s a big part
+of why I like it so much they #39;re not
+trying to brot force something like trpc
+inside of your client components they #39;re
+trying to make it easier to keep things
+on the server when they should be and
+pulling in the client when you should as
+well I really like this pattern I #39;m
+really excited by what the next team is
+doing here and I #39;m a little sad about
+how people have responded but I do think
+we #39;ll make more progress going forward
+and if you #39;re here to complain about the
+SQL string template literals thing
+please learn what tag functions are
+because we #39;ve had this solved in
+JavaScript for a long time just cuz you
+see a string and you see somebody
+inserting values into some SQL that does
+not mean we are introducing SQL
+injection problems you can watch Josh
+tried cod #39;s video if you want to see
+more about that but I #39;m I #39;m tired of
+talking about it youall need to learn
+how JV script Works before you make
+these
+assumptions once again this is not a new
+thing that they just introduced this has
+been in next1 13 for a while I had a
+package using this stuff over a year ago
+what change is that it #39;s now stable and
+honestly the only thing that that
+changes is that I have a config value I
+can delete from the next config and also
+I can use server actions with turbo
+because previously turbo didn #39;t work if
+you had any experimental Flags yeah this
+is a release for me not for a lot of
+y #39;all this is changing some of the fun
+experimental stuff to make it a little
+more access ible but there #39;s nothing
+really new in this release except for
+this is my favorite part partial
+pre-rendering I #39;m sure that they have a
+lot of really nice things to say here
+all about it but I #39;m going to go
+straight into my diagrams because this
+is a thing I #39;ve wanted and have been
+asking for for a long time for this
+we #39;re just going through the basic
+single page app model if you use
+something the create react app step one
+it #39;s going to be the same for all of
+these the request is made step two with
+again the single page app model HTML
+file with script tag sent to client what
+I mean here is when you create something
+with like V or create react app you get
+an HTML file as your starting point and
+that starting point has a script tag in
+it that loads your JavaScript where most
+of the page content comes from this HTML
+file is almost entirely static and very
+very rarely has the content you actually
+want on the page so if you have a
+dashboard or some tweets that load in or
+whatever all of the content that is
+rendered by react gets rendered after
+this HTML loads and then the JavaScript
+loads and then the JavaScript starts to
+render so let #39;s encode all of those
+Steps step three JS file loaded step
+four Js runs realizes it needs more data
+and here #39;s where we start to see how
+many steps exist in this pipe so JS runs
+realize it needs more data step Five Js
+fetches data renders content or real and
+roughly around this point you #39;ll finally
+have your correct content so the
+important things to recognize here are
+that after the request is made and you
+get that HTML file you probably have a
+skeleton state so you #39;ll see now with
+JavaScript disable download the twitch
+homepage this is all we get nothing else
+is going to happen because the entire
+page is contents actually come from
+JavaScript so without that JavaScript
+there and running the page never has
+content however we get this first
+response with this cached HTML page
+almost instantaneously because it #39;s a
+static HTML file being served from a CDN
+really cool as for the rest that tends
+to take a bit longer because the
+JavaScript has to run and then fetch
+additional data and then load the
+content but in that time in between
+things get really interesting this is
+when we get to loading spinner hell
+we #39;ve all seen this on some sites where
+it starts with one big loading spinner
+or a skeleton and then suddenly the
+whole page is loading Spinners with them
+all over the place appearing
+disappearing Etc that #39;s because all of
+the components that need data are
+getting the data they need often water
+falling and going back and forth dozens
+of times before the correct data is
+actually made its way to the client and
+in that window you have a ton of loading
+Spinners all over the place but once all
+of this is complete however long that
+takes you have the correct page
+content we have these three different
+states you get and in this time above
+here there is one last state that #39;s
+important to know about which is what I
+call the boring white page this is that
+blank loading page that you #39;ll see in
+your browser as the you #39;re waiting for
+the server to make its first response if
+you don #39;t have your HTML cached on a CDN
+of some form that piece is going to take
+a while it #39;s going to be very slow
+you #39;re going to be in this boring white
+page for a bit but if you have CDN
+cached HTML you get it instantly and
+then what this ends up feeling like is
+the site is much faster even if it #39;s not
+because every single page has a loading
+state that you have some control of
+that #39;s an important detail so remember
+that as we go forward so this was the
+the spa way again everything I about to
+cover has been covered a little bit in
+my SSR video but I #39;m going to go over it
+really quickly if you feel like you need
+more details then I #39;ll make sure the SSR
+video is linked in the description we #39;re
+going to do the OG SSR way so think of
+this with things like remix next page
+router so the SSR way has one very
+important difference here we don #39;t go
+straight to the HTML file the server
+processes request generates initial HTML
+response and I should just delete all of
+these cuz they #39;re no longer accurate the
+important thing to realize here is that
+because the server is taking the request
+and running that JavaScript to get that
+first page correct we end up pushing
+back when you get the skeleton State
+really far so the skeleton State ends up
+happening like here because it takes a
+while for the server to finish
+processing that request because it can #39;t
+just send a cach HTML response it
+doesn #39;t have it it #39;s generating the
+correct HTML on every request because of
+that when you load a next app with the
+traditional patterns with SSR or even a
+remix app you #39;re going to see those
+blank White Pages significantly longer
+the solution for this is to either move
+your compute to things like Edge so that
+you can get the response faster or to
+cach an HTML response and then fill the
+rest in later but then you #39;re getting
+almost none of the benefits of the SSR
+this puts developers in a really weird
+spot and it #39;s also why you #39;ve introduced
+patterns like ISR which stands for
+incremental static revalidation which is
+a really important pattern because it
+lets you statically generate the page
+one time when a user requests it and
+then serve that cached page going
+forward but some user is still going to
+have to eat this window I call this cold
+start because this is a really big
+problem if you #39;re using things like
+Lambda or services like forell that use
+node because this window takes so long
+to resolve that your websites end up
+feeling much worse even if you do
+everything right from that point forward
+you #39;ll end up with what is really cool
+where you #39;ll have the correct content as
+soon as the page loads which is dope or
+if you #39;re streaming in additional
+responses you might have a loading state
+or two but you #39;re still eating this cold
+start and there #39;s still a much longer
+window between when the user goes to the
+URL and when they see something that you
+have controlled of and this is the
+difference I really want to highlight
+here because this is where pre-rendering
+gets very interesting so the RSC way so
+the server processes and it starts
+generating HTML but what it will more
+often than not do is if you #39;re using
+suspense correctly it can immediately
+send back a skeleton I #39;ll say skeleton
+State and then step three would be
+server streams rest of content when done
+creating it so if you have one widget on
+your application that is fetching data
+from your table and that takes a while
+you can wrap that in a suspense and now
+once that #39;s done loading you #39;ll get that
+response streamed in updating in line
+and you don #39;t have to worry about the
+user taking too long to get that initial
+response however in order for this
+pattern to work we have to have the
+server process the request and this is
+the really big point I want to emphasize
+if the server has to process the request
+you #39;re going to take longer to get that
+skeleton State it #39;s going to take longer
+for the user to see anything and they #39;re
+going to be hanging on that boring white
+page significantly longer and this makes
+the perceived performance of your
+websites significantly worse so much so
+that I actually moved to Edge so I could
+reduce this as much as possible and get
+you that skeleton State faster and if
+you #39;re thinking about this in terms of
+the request life cycle it #39;s really
+interesting so here are two rectangles
+meant to represent the state that your
+app is in the left side is when the
+request is made and on the right side is
+when the content is fully correct the
+red is when you #39;re in that white loading
+page of Doom where it #39;s just showing you
+the white skeleton the blue is when you
+actually have control of some of the
+content the user is seeing when you have
+an actual contentful skeleton page of
+some form so obviously our goal is to
+make both of these rectangles as small
+as possible more importantly is to get
+this blue rectangle as far to the left
+as possible so we can give the user a
+good State historically all of the
+changes that NEX has been making and
+react as a whole have been making have
+been focused on reducing the size of
+this blue rectangle because previously
+this blue rectangle had like 15
+different steps in it but the piece that
+people are missing is that this red
+rectangle got larger with the old model
+you would make a request you would get
+that cached HTML response almost
+immediately and then the client would
+have to do a bunch of of work in order
+to fill the page with the right stuff
+and I like that the new model went so
+out of its way to make the blue
+rectangle smaller but if we look at like
+the actual numbers what we #39;re going to
+see is something like this where that
+first response takes a good bit longer
+to get to the user but the amount of
+time for that response to be correct is
+much shorter and even though this means
+the user is getting content much faster
+overall it often feels slower because
+those white loading Pages just feel
+terrible and I #39;ve ended up doing a lot
+of crazy things in order to make this
+red rectangle shorter myself and the
+reason that this has to exist is because
+the response that happens here between
+these two things which is that first
+bite the server sends to the user if
+that #39;s not coming from a CDN is going to
+take much longer inherently ideally the
+HTML the user gets as the initial
+response to their initial request is
+cached in a CDM and this is why partial
+pre-rendering is so interesting if we
+take this model and we think about it in
+terms of the actual bytes that are being
+sent to the user where we have the
+requests being made here we have the
+First Response the server sends so this
+is First Response and then we have at
+the end here the final response and this
+final response is streamed in what if we
+could take this first response and just
+move it to the side here that #39;s what
+pre-rendering is we are effectively
+taking the first response that your
+server sends and we are scooting it over
+so that the rest can come in later and I
+want to be clear here the server cells
+has spin up so this isn #39;t going to
+actually be any meaningfully faster
+we #39;ve effectively done this we have
+taken the behavior of the old model
+where you get a response immediately and
+we have gotten you that response
+dynamically generated instantly from a
+cache so we #39;re taking the First Response
+the server sends to one of these
+requests we #39;re putting it in the CDN and
+then you stream in everything else after
+so you need to make sure that
+personalized things like stuff that
+exists in a user specific page like
+their recommendations or their profile
+picture that those all exist under a
+suspense boundary but as long as they do
+and all the things above your suspense
+components are not unique to specific
+users or specific request behaviors you
+can now cash that and get a response
+immediately that is huge this is kind of
+a Best of Both Worlds and honestly it
+makes me much more hesitant to use Edge
+because I #39;ve historically relied on Edge
+versus Lambda just to reduce the cold
+starts if I was to go back to the way
+this diagram was a second ago let #39;s just
+start making my diagrams before I make
+my videos it #39;ll make my life much easier
+so again that first response was coming
+after the server spun up and if I was to
+draw yet another rectangle in here we #39;ll
+call this the cold start window so this
+is the time that your server is spinning
+up in order to send that first response
+we #39;ve effectively let you take this
+first response and move it to before
+that we #39;re not getting rid of this
+compute we #39;re not getting rid of the
+effort that the server has to do in
+order to start sending responses we #39;re
+just taking what it was going to
+initially send and moving that earlier
+in the request life cycle so this isn #39;t
+going to make things actually faster
+it #39;s just going to make them feel
+significantly faster which honestly is
+much better because we #39;re going to go to
+a page and we #39;re going to see something
+instantly so for blogs for docs for all
+the types of things where the majority
+of the content doesn #39;t change per user
+things will feel comically fast and
+honestly hacking this Behavior into ping
+was a huge part of why people think ping
+is a super fast site to this day because
+Ping #39;s actual requests aren #39;t super fast
+they often take 3 plus seconds due to
+the cold starts that we #39;re eating on the
+service but because every page is
+statically cashed by hand the result is
+a service that feels nearly
+instantaneous and as long as we can move
+this first response accurately to be way
+quicker because it #39;s on a CDN we #39;re
+going to have a much better time
+browsing applications using these
+patterns so again this is why I #39;m so
+excited CDN caching is a great tool and
+we should be able to use it trivially
+with these changes we finally can from
+what I #39;ve heard it #39;s not a super stable
+change just yet but I #39;m sure that will
+smooth out quickly it works in next but
+they #39;re still getting the details just
+right on versell itself so once it #39;s all
+working I #39;ll be sure to do some demos
+and show off just how performant all
+these new Solutions are I #39;m excited
+about this new feature but it #39;s not even
+something you turn on it #39;s just a
+default Behavior with suspense that
+should have been their day one and I #39;m
+really excited to have it but it #39;s also
+kind of boring what do you think though
+are you excited for next1 14 are you
+trying to move your apps over what about
+turbo pack are you having any luck
+building with that just yet if you want
+to learn more about why I like this new
+model so much I #39;ll pin a video all about
+it there
+and if you don #39;t want to see that or
+you #39;ve already watched it there #39;s a
+video below it that YouTube seems to
+think you #39;re going to like appreciate
+yall a ton sorry for the delay getting
+this one out but I #39;ve been very very
+busy I #39;m sure yall understand see you
+guys soon peace NS
