@@ -1,36 +1,25 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+# Video2Quiz.Ai
 
-First, run the development server:
+**Everyone watches YouTube videos to learn and stay informed, but how can you be sure you've understood everything explained in the video?**
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+**Video2Quiz.Ai** – the app designed to test your knowledge about the YouTube videos you've just watched. With Video2Quiz.Ai, you can transform any YouTube video into an engaging quiz that helps reinforce what you've learned and ensures you grasp the key concepts.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Key Features
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+- **AI-Powered Quiz Generation**: Simply enter the URL of any YouTube video, and our AI will generate a comprehensive quiz based on the video's content.
+- **Real-Time Knowledge Testing**: Immediately test your understanding of the video and get a score.
+- **Save and Review Quizzes**: Save quizzes to revisit later, and review your past quizzes to track your learning progress.
+- **Responsive Design**: Enjoy a seamless experience across all devices, whether you're on your phone, tablet, or desktop.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Empower your learning with Video2Quiz.Ai – because understanding is just the beginning.
 
-## Learn More
+## How It Works
 
-To learn more about Next.js, take a look at the following resources:
+1. **Enter Video URL**: Paste the URL of the YouTube video you want to quiz yourself on.
+2. **Generate Quiz**: Click "Generate Quiz" and let our AI create a set of questions based on the video's content.
+3. **Take the Quiz**: Answer the questions to the best of your ability.
+4. **Get Your Score**: See your results instantly and identify areas where you can improve.
+5. **Save and Review**: Save quizzes for future review and keep track of your learning journey.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+---
