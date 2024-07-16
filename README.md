@@ -4,6 +4,8 @@
 
 **Video2Quiz.Ai** – the app designed to test your knowledge about the YouTube videos you've just watched. With Video2Quiz.Ai, you can transform any YouTube video into an engaging quiz that helps reinforce what you've learned and ensures you grasp the key concepts.
 
+**Watch the full demo here:**  https://screenrec.com/share/VIH3kTg2Y8 
+
 ## Key Features
 
 - **AI-Powered Quiz Generation**: Simply enter the URL of any YouTube video, and our AI will generate a comprehensive quiz based on the video's content.
@@ -20,5 +22,6 @@ Empower your learning with Video2Quiz.Ai – because understanding is just the b
 3. **Take the Quiz**: Answer the questions to the best of your ability.
 4. **Get Your Score**: See your results instantly and identify areas where you can improve.
 5. **Save and Review**: Save quizzes for future review and keep track of your learning journey.
+
 
 ---
