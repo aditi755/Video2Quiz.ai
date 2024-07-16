@@ -17,86 +17,167 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
 import axios from "axios";
 
 export default function VideoToQuiz() {
-  const [videoUrl, setVideoUrl] = useState("");
-  const [quiz, setQuiz] = useState(null);
-  const [userAnswers, setUserAnswers] = useState([]);
-  const [score, setScore] = useState(null);
-  const [error, setError] = useState("");
-  const [savedQuizzes, setSavedQuizzes] = useState([]);
-  const [viewSavedQuiz, setViewSavedQuiz] = useState(null);
-  const [loading, setLoading] = useState(false);
+  // const [videoUrl, setVideoUrl] = useState("");
+  // const [quiz, setQuiz] = useState(null);
+  // const [userAnswers, setUserAnswers] = useState([]);
+  // const [score, setScore] = useState(null);
+  // const [error, setError] = useState("");
+  // const [savedQuizzes, setSavedQuizzes] = useState([]);
+  // const [viewSavedQuiz, setViewSavedQuiz] = useState(null);
+  // const [loading, setLoading] = useState(false);
+
+  // useEffect(() => {
+  //   const savedQuizzes = localStorage.getItem("savedQuizzes");
+  //   if (savedQuizzes) {
+  //     setSavedQuizzes(JSON.parse(savedQuizzes));
+  //   }
+  // }, []);
+
+  // const handleTranscriptFetch = async () => {
+  //   setLoading(true);
+  //   try {
+  //     const response = await axios.post(
+  //       "/api/transcript",
+  //       { videoUrl: String(videoUrl) },
+  //       { headers: { "Content-Type": "application/json" } }
+  //     );
+  //     if (response.status !== 200) {
+  //       console.error("Error fetching transcript:", response.status);
+  //       throw new Error("Failed to fetch transcript");
+  //     }
+  //     const quizQuestions = response.data;
+  //     setQuiz(quizQuestions);
+  //     setUserAnswers(new Array(quizQuestions.length).fill(""));
+  //     const newSavedQuizzes = [{ videoUrl, quiz: quizQuestions }, ...savedQuizzes];
+  //     setSavedQuizzes(newSavedQuizzes);
+  //     localStorage.setItem("savedQuizzes", JSON.stringify(newSavedQuizzes));
+  //   } catch (error) {
+  //     console.error("Error fetching transcript:", error);
+  //     setError("Failed to fetch transcript. Please try again.");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   handleTranscriptFetch();
+  // };
+
+  // const handleAnswerChange = (questionIndex, answer) => {
+  //   const updatedAnswers = [...userAnswers];
+  //   updatedAnswers[questionIndex] = answer;
+  //   setUserAnswers(updatedAnswers);
+  // };
+
+  // const handleQuizSubmit = (event) => {
+  //   event.preventDefault();
+  //   let calculatedScore = 0;
+  //   quiz.forEach((question, index) => {
+  //     if (userAnswers[index] === question.correct_answer) {
+  //       calculatedScore += 1;
+  //     }
+  //   });
+  //   setScore(calculatedScore);
+  // };
+
+  // const clearSavedQuizzes = () => {
+  //   localStorage.removeItem("savedQuizzes");
+  //   setSavedQuizzes([]);
+  //   setViewSavedQuiz(null);
+  // };
+
+  // const handleViewSavedQuiz = (index) => {
+  //   setViewSavedQuiz(savedQuizzes[index].quiz);
+  // };
+
+  // const handleDeleteQuiz = (index) => {
+  //   const newSavedQuizzes = savedQuizzes.filter((_, i) => i !== index);
+  //   setSavedQuizzes(newSavedQuizzes);
+  //   localStorage.setItem("savedQuizzes", JSON.stringify(newSavedQuizzes));
+  //   setViewSavedQuiz(null);
+  // };
+
+  const [videoUrl, setVideoUrl] = useState('')
+  const [quiz, setQuiz] = useState(null)
+  const [userAnswers, setUserAnswers] = useState([])
+  const [score, setScore] = useState(null)
+  const [error, setError] = useState('')
+  const [savedQuizzes, setSavedQuizzes] = useState([])
+  const [viewSavedQuiz, setViewSavedQuiz] = useState(null)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    const savedQuizzes = localStorage.getItem("savedQuizzes");
+    const savedQuizzes = localStorage.getItem('savedQuizzes')
     if (savedQuizzes) {
-      setSavedQuizzes(JSON.parse(savedQuizzes));
+      setSavedQuizzes(JSON.parse(savedQuizzes))
     }
-  }, []);
+  }, [])
 
   const handleTranscriptFetch = async () => {
-    setLoading(true);
+    setLoading(true)
     try {
       const response = await axios.post(
-        "/api/transcript",
+        '/api/transcript',
         { videoUrl: String(videoUrl) },
-        { headers: { "Content-Type": "application/json" } }
-      );
+        { headers: { 'Content-Type': 'application/json' } }
+      )
       if (response.status !== 200) {
-        console.error("Error fetching transcript:", response.status);
-        throw new Error("Failed to fetch transcript");
+        console.error('Error fetching transcript:', response.status)
+        throw new Error('Failed to fetch transcript')
       }
-      const quizQuestions = response.data;
-      setQuiz(quizQuestions);
-      setUserAnswers(new Array(quizQuestions.length).fill(""));
-      const newSavedQuizzes = [{ videoUrl, quiz: quizQuestions }, ...savedQuizzes];
-      setSavedQuizzes(newSavedQuizzes);
-      localStorage.setItem("savedQuizzes", JSON.stringify(newSavedQuizzes));
+      const quizQuestions = response.data
+      setQuiz(quizQuestions)
+      setUserAnswers(new Array(quizQuestions.length).fill(''))
+      const newSavedQuizzes = [{ videoUrl, quiz: quizQuestions }, ...savedQuizzes]
+      setSavedQuizzes(newSavedQuizzes)
+      localStorage.setItem('savedQuizzes', JSON.stringify(newSavedQuizzes))
     } catch (error) {
-      console.error("Error fetching transcript:", error);
-      setError("Failed to fetch transcript. Please try again.");
+      console.error('Error fetching transcript:', error)
+      setError('Failed to fetch transcript. Please try again.')
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   const handleSubmit = (event) => {
-    event.preventDefault();
-    handleTranscriptFetch();
-  };
+    event.preventDefault()
+    handleTranscriptFetch()
+  }
 
   const handleAnswerChange = (questionIndex, answer) => {
-    const updatedAnswers = [...userAnswers];
-    updatedAnswers[questionIndex] = answer;
-    setUserAnswers(updatedAnswers);
-  };
+    const updatedAnswers = [...userAnswers]
+    updatedAnswers[questionIndex] = answer
+    setUserAnswers(updatedAnswers)
+  }
 
   const handleQuizSubmit = (event) => {
-    event.preventDefault();
-    let calculatedScore = 0;
+    event.preventDefault()
+    let calculatedScore = 0
     quiz.forEach((question, index) => {
       if (userAnswers[index] === question.correct_answer) {
-        calculatedScore += 1;
+        calculatedScore += 1
       }
-    });
-    setScore(calculatedScore);
-  };
+    })
+    setScore(calculatedScore)
+  }
 
   const clearSavedQuizzes = () => {
-    localStorage.removeItem("savedQuizzes");
-    setSavedQuizzes([]);
-    setViewSavedQuiz(null);
-  };
+    localStorage.removeItem('savedQuizzes')
+    setSavedQuizzes([])
+    setViewSavedQuiz(null)
+  }
 
   const handleViewSavedQuiz = (index) => {
-    setViewSavedQuiz(savedQuizzes[index].quiz);
-  };
+    setViewSavedQuiz(savedQuizzes[index].quiz)
+  }
 
   const handleDeleteQuiz = (index) => {
-    const newSavedQuizzes = savedQuizzes.filter((_, i) => i !== index);
-    setSavedQuizzes(newSavedQuizzes);
-    localStorage.setItem("savedQuizzes", JSON.stringify(newSavedQuizzes));
-    setViewSavedQuiz(null);
-  };
+    const newSavedQuizzes = savedQuizzes.filter((_, i) => i !== index)
+    setSavedQuizzes(newSavedQuizzes)
+    localStorage.setItem('savedQuizzes', JSON.stringify(newSavedQuizzes))
+    setViewSavedQuiz(null)
+  }
 
 
     return (
