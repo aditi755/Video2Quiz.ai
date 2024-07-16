@@ -1,4 +1,3 @@
-
 # Video2Quiz.Ai
 
 **Everyone watches YouTube videos to learn and stay informed, but how can you be sure you've understood everything explained in the video?**
