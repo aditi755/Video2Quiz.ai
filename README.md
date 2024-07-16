@@ -6,6 +6,10 @@
 
 **Watch the full demo here:**  https://screenrec.com/share/VIH3kTg2Y8 
 
+
+https://github.com/user-attachments/assets/332549fa-469f-47f9-9e63-82dab81ddf91
+
+
 ## Key Features
 
 - **AI-Powered Quiz Generation**: Simply enter the URL of any YouTube video, and our AI will generate a comprehensive quiz based on the video's content.
