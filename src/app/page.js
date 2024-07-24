@@ -9,8 +9,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
 import { CardContainer, CardItem, CardBody } from "@/components/ui/3d-card";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import { HoverEffect} from "@/components/ui/card-hover-effect";
-import axios from "axios";
-
+import { fetchTranscript } from "@/actions";
 export default function VideoToQuiz() {
   const [videoUrl, setVideoUrl] = useState('')
   const [quiz, setQuiz] = useState(null)
@@ -21,6 +20,8 @@ export default function VideoToQuiz() {
   const [viewSavedQuiz, setViewSavedQuiz] = useState(null)
   const [loading, setLoading] = useState(false)
 
+
+  
   useEffect(() => {
     const savedQuizzes = localStorage.getItem('savedQuizzes')
     if (savedQuizzes) {
@@ -31,21 +32,20 @@ export default function VideoToQuiz() {
   const handleTranscriptFetch = async () => {
     setLoading(true)
     try {
-      const response = await axios.post(
-        '/api/transcript',
-        { videoUrl: String(videoUrl) },
-        { headers: { 'Content-Type': 'application/json' } }
-      )
-      if (response.status !== 200) {
-        console.error('Error fetching transcript:', response.status)
-        throw new Error('Failed to fetch transcript')
-      }
-      const quizQuestions = response.data
-      setQuiz(quizQuestions)
-      setUserAnswers(new Array(quizQuestions.length).fill(''))
-      const newSavedQuizzes = [{ videoUrl, quiz: quizQuestions }, ...savedQuizzes]
-      setSavedQuizzes(newSavedQuizzes)
-      localStorage.setItem('savedQuizzes', JSON.stringify(newSavedQuizzes))
+      const response = await fetchTranscript(videoUrl);
+      if (Array.isArray(response) && response.length > 0) {
+        console.log('Quiz questions received:', response);
+        setQuiz(response);
+        setUserAnswers(new Array(response.length).fill(''));
+
+        const newSavedQuizzes = [{ videoUrl, quiz: response }, ...savedQuizzes];
+        setSavedQuizzes(newSavedQuizzes);
+        localStorage.setItem('savedQuizzes', JSON.stringify(newSavedQuizzes));
+    } else {
+        console.error('Unexpected format of quiz questions:', response);
+        setError('Unexpected format of quiz questions');
+    }
+    
     } catch (error) {
       console.error('Error fetching transcript:', error)
       setError('Failed to fetch transcript. Please try again.')
@@ -203,17 +203,6 @@ export default function VideoToQuiz() {
               </div>
             </div>
 
-{/* <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-      {items.map((item, idx) => (
-        <HoverEffect key={idx} items={[item]} className="hoverEffect">
-          <div className="bg-background p-6 rounded-lg shadow-sm">
-            {item.icon}
-            <h3 className="text-xl font-bold mb-2">{item.title}</h3>
-            <p className="text-muted-foreground">{item.description}</p>
-          </div>
-        </HoverEffect>
-      ))}
-    </div> */}
           </section>
 
 <section className="container mx-auto px-4 md:px-6 py-12 md:py-24 bg-muted">
