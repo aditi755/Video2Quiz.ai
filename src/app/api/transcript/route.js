@@ -75,8 +75,8 @@ async function generateQuizQuestions(description) {
 
     return parsedResponse;
   } catch (error) {
-    console.error('Failed to generate quiz questions', error);
-    throw new Error('Failed to generate quiz questions');
+    console.error('Failed to generate quiz questions from /api/transcript', error);
+    throw new Error('Failed to generate quiz questions from /api/transcritpt');
   }
 }
 
@@ -101,6 +101,6 @@ export async function POST(req) {
     return NextResponse.json(quizQuestions);
   } catch (error) {
     console.error('Error in generateQuizQuestions:', error);
-    return NextResponse.json({ error: 'Failed to generate quiz questions' }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to generate quiz questions from /api/transcript' }, { status: 500 });
   }
 }

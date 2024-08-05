@@ -66,7 +66,7 @@ export async function generateTranscript(videoUrl) {
 
         if (!response.ok) {
             const error = await response.json();
-            throw new Error(error.error || 'Failed to generate transcript');
+            throw new Error(error.error || 'Failed to generate transcript from /api.js');
         }
 
         // Return the JSON data
