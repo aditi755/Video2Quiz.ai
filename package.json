@@ -18,11 +18,13 @@
     "framer-motion": "^11.3.2",
     "fs": "^0.0.1-security",
     "lucide-react": "^0.408.0",
+    "mongoose": "^8.5.1",
     "next": "14.2.5",
     "react": "^18",
     "react-dom": "^18",
     "tailwind-merge": "^2.4.0",
     "tailwindcss-animate": "^1.0.7",
+    "uuidv4": "^6.2.13",
     "youtube-transcript": "^1.2.1"
   },
   "devDependencies": {

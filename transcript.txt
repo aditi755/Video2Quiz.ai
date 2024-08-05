@@ -1,282 +1,82 @@
-the most popular full stack JavaScript
-framework in the world is without a
-doubt next JS and just recently they
-announced version 13 which unleashes a
-brand new paradigm for writing next apps
-with react server components today #39;s
-video is a full tutorial where we build
-a basic crud app for taking notes that
-takes advantage of these brand new
-features it #39;s beginner level so you #39;ll
-learn a lot if you #39;re new to writing
-code or if you #39;re an experienced next
-developer you #39;ll gain a better
-understanding of these new changes
-whenever a popular framework has a major
-change it #39;s very difficult for those
-learning to code I saw it happen when
-angular 1 went to angular 2 when view 2
-went to view 3 and now with next 12 to
-next 13. there are millions of next
-tutorials and courses on the internet
-but as of this week they #39;re all outdated
-well kind of these new features can be
-incrementally adopted which means you
-can still write next code the old way
-the bad news is that learning xjs in
-2023 will be a little more confusing
-because there are now two different ways
-to do essentially the same thing also
-keep in mind that these new features are
-currently in beta so if anything I show
-you today doesn #39;t work it #39;s not my fault
-go and read the docs to get started
-we #39;ll first want to generate a new next
-13 app with a CLI and I #39;ll be using
-typescript with the TS flag now I want
-to build a real full stack app here and
-that means we need some kind of backend
-database for that we #39;ll be using pocket
-base which in my opinion is the ultimate
-backend for side projects it #39;s
-incredibly easy to use and can be a
-great option for production as well to
-use it simply go to the website and
-download its executable into the root of
-your project now open the terminal and
-run it with its serve command it #39;ll give
-you a link to the admin UI where you can
-now manage users and add records to a
-database let #39;s go to the database
-section and add a new collection under
-the hood pocketbase uses SQL Lite so a
-collection is like a new table that will
-require a couple of fields like title
-and content for the notes a database is
-secure by default which means we #39;ll need
-to go to the permissions and make all
-the different operations public that #39;s
-all we need for right now let #39;s go ahead
-and get back into our next JS code
-currently in the file system you #39;ll see
-a Pages directory but go ahead and put
-that in the garbage because that #39;s the
-old way of doing things the new way is
-to add your routes in the app directory
-next use file system routing where the
-names of directories Define the actual
-URL structure of your web app when a
-directory is surrounded by bracket that
-means it #39;s a dynamic route which might
-be like an ID or username that can be
-any wildcard value in addition
-directories can be surrounded by
-parentheses which means they #39;ll be
-ignored by the routing system this can
-be useful when you want to place some
-files somewhere but don #39;t want it to
-affect the actual URL structure now to
-build out the UI there #39;s a variety of
-different reserved file names and the
-most common one that you #39;ll use is page
-it exports a default react component
-that defines the actual UI that you want
-to display here that should give us a
-basic hello world let #39;s go ahead and
-save the file and run the application
-before we do that though you should know
-that versel the company that maintains
-nexjs also just released a brand new
-build tool called turbo pack it #39;s
-currently an alpha but I like to live
-dangerously go into the package Json and
-add the turbo flag to the next Dev
-command now in the terminal run npm run
-Dev and you should get that hello world
-in the browser what you #39;ll notice is
-that it automatically detected that we
-were missing a layout.js file which is
-the UI that surrounds the entire
-application if we open it up you can see
-it #39;s a react component that takes
-children and renders them inside the
-body of the HTML document any code you
-define here will be displayed on every
-single page so it might be a good place
-to add a global nav bar and footer
-what #39;s cool about layouts is that they
-can be nested when you have a layout in
-a subdirectory it will only be applied
-to the children of that route and you
-can also fetch data in layouts which
-makes the application much more
-efficient because you don #39;t need to
-re-render and refetch data on the
-subrouts next thing I #39;m doing is adding
-a global CSS file I #39;m not going to
-explain the CSS in this tutorial but you
-can copy it from the source code which
-is on GitHub now it #39;s time to start
-thinking about routes we can create a
-route called notes by adding a new
-directory this route will fetch all the
-notes from pocket base and also provide
-a form to create a new node first to
-build out this UI We #39;ll add a page.tsx
-file inside of which exports a default
-react component that will also be marked
-async the cool thing about next 13 is
-that components are server components by
-default we which means they get rendered
-on the server and we can do data
-fetching directly inside of them with
-async await Define an async function
-called get notes that uses the fetch API
-to retrieve data from your backend in
-our case pocketbase comes with a
-built-in rest API where we can point to
-the notes collection and then retrieve a
-paginated list of results we #39;ll say page
-1 with 30 results per page we can then
-convert that result into Json and then
-return the items which will be an array
-of the data in the database now in the
-component to fetch data all we have to
-do is await a call to this function that
-gives us access to an array of notes
-which we can Loop over in the UI to
-render out a basic note component that
-contains the title content and so on go
-ahead and view the app in the browser
-and you should now see a list of all the
-records you #39;ve created in the database
-it #39;s all server rendered however one
-important thing to understand is that
-next will automatically cache this route
-because the route segment is not dynamic
-in other words it #39;s treated like a
-static page but we can go back into our
-code and change that by adding the Cache
-no store option to to fetch and now it
-will refetch the items from the server
-on every request if you #39;ve used nexjs in
-the past this is roughly the equivalent
-to get server-side props now I want to
-point out that you don #39;t have to use the
-fetch API here pocketbase has its own
-SDK that works like an orm where we
-could just make a reference to it and
-then grab all the records by saying DB
-records get list notes but now you might
-be wondering how do we change the
-caching Behavior next 13 also has a
-variety of variables that you can export
-from a page to change things like the
-caching behavior and runtime which is
-necessary if you are not using fetch so
-that takes care of our list page now I
-want to show you how to create a dynamic
-route you #39;ll notice in the note
-component that I #39;m linking to a note
-with a random ID which is generated by
-pocket base to create a dynamic route
-like that we #39;ll add a second directory
-called ID surrounded by brackets that
-tells next that this route segment is a
-wild card and can be any value like
-before we create a page component and
-Export a server component from it let #39;s
-also create a data fetching function
-called git note that retrieves an
-individual item from the database and in
-order to do that it will need the ID
-from the URL but let #39;s once again use
-the fetch API and interpolate the note
-ID into the actual route now I want to
-point out that because this is a dynamic
-route it won #39;t automatically cache every
-request however you may want to update
-the caching Behavior you can Implement
-incremental static regeneration by
-adding the revalidate option to fetch
-this tells next to regenerate the page
-on the server if it #39;s older than a
-certain number of seconds and if you
-want to pre-render these Pages you can
-also export a function called generate
-static params this is the equivalent to
-get static paths in previous versions of
-next now in the component we can call
-this function and pass the params ID
-from the URL as the argument that gets
-the data from the database which we can
-then display in the UI at this point you
-should be able to go to the list of
-nodes click on one of them which
-navigates you to a page just for that
-one note that #39;s pretty cool but next 13
-also has a couple of other tricks up its
-sleeve to manage the loading State and
-UI between routes it can add a loading
-Dot TSX file inside the ID directory it
-simply exports a component with some
-kind of loading indicator that will be
-rendered in place of the page when the
-data is being fetched this results in
-Faster load times because the content
-can be streamed directly into that
-component instead of waiting for the
-entire page to load on a similar note
-you can also have an error file that
-will also be rendered in place of the
-page when an error occurs and that just
-makes it really easy to handle loading
-and error States so far in this tutorial
-we #39;ve only looked at data fetching but
-your app will also likely need to write
-or mutate data as well in order to
-handle that we #39;ll need an interactive
-component that #39;s rendered on the client
-in the notes directory let #39;s go ahead
-and create a new component called create
-note but unlike our other components
-this one has use client at the top this
-tells next not to render it on the
-server rather only in the browser in the
-components I #39;m adding the use State hook
-to add fields for title and content then
-in the jsx I create a form that adds a
-couple of inputs to modify those values
-each input listens to the on change
-event then update the state accordingly
-now let #39;s define a create function
-that #39;s called when the form is submitted
-it will also use fetch to make a request
-to the pocket base API however this time
-it #39;s a post request and sends the data
-from the form as the body of the request
-now let #39;s go ahead and take this client
-component and declare it in the notes
-page if we open up the app we can now
-fill out this form and create a new item
-in Pocket base however in order to see
-that item in the list we need to refresh
-the entire page and that #39;s not ideal
-luckily the new next router has us
-covered if we go back to the client
-component we can import the router from
-next navigation and it has a special
-method called refresh after the new
-record is created in the database it #39;ll
-re-execute the query on the notes page
-to get the list of notes which means you
-will automatically see the new note
-updated in the list without a full page
-refresh congratulations you just built a
-full stack application with next 13. as
-of today next 13 is in beta and still a
-little rough around the edges but I will
-keep you updated as things change so
-make sure to subscribe to the channel
-thanks for watching and I will see you
-in next one
+redis an in-memory multi-model database
+famous for its sub-millisecond latency
+it was created in 2009 based on the idea
+that a cache can also be a durable data
+store
+around this time apps like twitter were
+growing exponentially and needed a way
+to deliver data to their end users
+faster than a relational database could
+handle
+redis which means remote dictionary
+server was adopted by some of the most
+heavily trafficked sites in the world
+because it changed the database game by
+creating a system where data is always
+modified or read from the main computer
+memory
+as opposed to the much slower disk but
+at the same time
+it stores its data on the disk so it can
+be reconstructed
+as needed which means the database is
+fully durable supporting things like
+snapshots and backups every data point
+in the database is a key
+followed by one of many different data
+structures like a string
+list hash or stream so you can store
+data naturally just like you would with
+your favorite programming language as
+opposed to squeezing it into a bunch of
+tables or json documents
+interacting with the database is handled
+with a simple set of commands
+like set followed by a key and value to
+create data
+then git followed by a key to read data
+historically
+redis has been described as a key value
+store and is often used as a cache to
+make relational databases faster at
+scale
+but here #39;s where your mind is about to
+be blown redis is perfectly suitable as
+a primary database
+and can dramatically reduce complexity
+because making things go fast at scale
+is the primary cause of complexity in
+the first place with redis your database
+is already fast
+no need for a complex caching layer but
+you might be wondering
+how do i model complex relationships
+today redis is what you would call
+a multi-model database supporting a
+variety of different database paradigms
+with
+add-on modules that you can opt into as
+needed if your data contains
+relationships bring in redis graph
+and query it with cipher or use the json
+module to structure your data as a
+hierarchy
+just like a document-oriented database
+then use the search module
+to turn your database into a full text
+search engine and it even has modules
+for ai workloads time series data
+and more the quickest way to get started
+is the free tier on redis enterprise
+cloud that #39;ll give you a free database
+to play around with and you can attach
+one extra module to it then you can
+connect to it with the redis cli or with
+the redis insight tool which contains an
+interactive dashboard to manage your
+data this has been redis in 100 seconds
+but what do you guys think would you use
+redis as your primary database let me
+know why or why not
+in the comments thanks for watching and
+i will see you in the next one

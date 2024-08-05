@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { YoutubeTranscript } from 'youtube-transcript';
 import fs from 'fs';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-
+import dbConnect from '@/lib/dbConnect';
 const apiKey = process.env.GOOGLE_GEMINI_API;
 
 async function fetchTranscript(videoUrl) {

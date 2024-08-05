@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -9,116 +9,146 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
 import { CardContainer, CardItem, CardBody } from "@/components/ui/3d-card";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import { HoverEffect} from "@/components/ui/card-hover-effect";
-import { fetchTranscript } from "@/actions";
+import { fetchSavedQuizzes, saveQuiz, deleteQuiz, generateTranscript } from "@/lib/api";
+import { v4 as uuidv4 } from 'uuid';
+
+
 export default function VideoToQuiz() {
-  const [videoUrl, setVideoUrl] = useState('')
-  const [quiz, setQuiz] = useState(null)
-  const [userAnswers, setUserAnswers] = useState([])
-  const [score, setScore] = useState(null)
-  const [error, setError] = useState('')
-  const [savedQuizzes, setSavedQuizzes] = useState([])
-  const [viewSavedQuiz, setViewSavedQuiz] = useState(null)
-  const [loading, setLoading] = useState(false)
+    const [videoUrl, setVideoUrl] = useState('');
+    const [quiz, setQuiz] = useState(null);
+    const [userAnswers, setUserAnswers] = useState([]);
+    const [score, setScore] = useState(null);
+    const [error, setError] = useState('');
+    const [savedQuizzes, setSavedQuizzes] = useState([]);
+    const [viewSavedQuiz, setViewSavedQuiz] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [message, setMessage] = useState('');
 
-
-  
-  useEffect(() => {
-    const savedQuizzes = localStorage.getItem('savedQuizzes')
-    if (savedQuizzes) {
-      setSavedQuizzes(JSON.parse(savedQuizzes))
-    }
-  }, [])
-
-  const handleTranscriptFetch = async () => {
-    setLoading(true)
-    try {
-      const response = await fetchTranscript(videoUrl);
-      if (Array.isArray(response) && response.length > 0) {
-        console.log('Quiz questions received:', response);
-        setQuiz(response);
-        setUserAnswers(new Array(response.length).fill(''));
-
-        const newSavedQuizzes = [{ videoUrl, quiz: response }, ...savedQuizzes];
-        setSavedQuizzes(newSavedQuizzes);
-        localStorage.setItem('savedQuizzes', JSON.stringify(newSavedQuizzes));
-    } else {
-        console.error('Unexpected format of quiz questions:', response);
-        setError('Unexpected format of quiz questions');
-    }
+    // Fetch saved quizzes on component mount
+    useEffect(() => {
+        const fetchSavedQuizzesData = async () => {
+          try {
+            const quizzes = await fetchSavedQuizzes();
+            console.log('saved quiz', quizzes)
+            setSavedQuizzes(quizzes);
+          } catch (err) {
+            console.error('Error fetching saved quizzes:', err);
+            setError('Failed to fetch saved quizzes. Please try again.');
+          }
+        };
     
-    } catch (error) {
-      console.error('Error fetching transcript:', error)
-      setError('Failed to fetch transcript. Please try again.')
-    } finally {
-      setLoading(false)
+        fetchSavedQuizzesData();
+      }, []); // Empty dependency array to run this effect only once
+
+      
+      //logic
+      
+useEffect(() => {
+    if (!localStorage.getItem('userIdentifier')) {
+      localStorage.setItem('userIdentifier', uuidv4());
     }
+  }, []);
+
+
+    const handleTranscriptFetch = async () => {
+  setLoading(true);
+  try {
+    const data = await generateTranscript(videoUrl);
+    console.log('quiz data from page.js', data); // Check if data is valid
+
+    if (Array.isArray(data) && data.length > 0) {
+      setQuiz(data);
+      setUserAnswers(new Array(data.length).fill(''));
+
+      const userIdentifier = localStorage.getItem('userIdentifier');
+      const newQuiz = { userIdentifier, videoUrl, quiz: data };
+      console.log('newQuiz', newQuiz);
+      
+      await saveQuiz(newQuiz);
+
+      setSavedQuizzes(prev => [newQuiz, ...prev]);
+      setMessage('Quiz saved successfully!');
+    } else {
+      setError('Unexpected format of quiz questions');
+    }
+  } catch (error) {
+    console.error('Error fetching transcript:', error);
+    setError('Failed to fetch transcript. Please try again.');
+  } finally {
+    setLoading(false);
   }
-
-  const handleSubmit = (event) => {
-    event.preventDefault()
-    handleTranscriptFetch()
-  }
-
-  const handleAnswerChange = (questionIndex, answer) => {
-    const updatedAnswers = [...userAnswers]
-    updatedAnswers[questionIndex] = answer
-    setUserAnswers(updatedAnswers)
-  }
-
-  const handleQuizSubmit = (event) => {
-    event.preventDefault()
-    let calculatedScore = 0
-    quiz.forEach((question, index) => {
-      if (userAnswers[index] === question.correct_answer) {
-        calculatedScore += 1
-      }
-    })
-    setScore(calculatedScore)
-  }
-
-  const clearSavedQuizzes = () => {
-    localStorage.removeItem('savedQuizzes')
-    setSavedQuizzes([])
-    setViewSavedQuiz(null)
-  }
-
-  const handleViewSavedQuiz = (index) => {
-    setViewSavedQuiz(savedQuizzes[index].quiz)
-  }
-
-  const handleDeleteQuiz = (index) => {
-    const newSavedQuizzes = savedQuizzes.filter((_, i) => i !== index)
-    setSavedQuizzes(newSavedQuizzes)
-    localStorage.setItem('savedQuizzes', JSON.stringify(newSavedQuizzes))
-    setViewSavedQuiz(null)
-  }
-
-  const words = [
-    { text: "Engage your audience and improve knowledge retention with our powerful video to quiz conversion tool." },
-  ];
-
-  const items = [
-    {
-      title: "Upload Video",
-      description: "Paste the link to your YouTube video and let us do the rest.",
-      icon: <UploadIcon className="w-8 h-8 mb-4" />,
-    },
-    {
-      title: "Answer Quiz",
-      description: "Get generated quiz and attempt questions to check your knowledge.",
-      icon: <FilePenIcon className="w-8 h-8 mb-4" />,
-    },
-    {
-      title: "Saved Quizzes",
-      description: "Review the quiz whenever you want as it gets saved automatically.",
-      icon: <ShareIcon className="w-8 h-8 mb-4" />,
-    },
-  ];
+};
 
 
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        handleTranscriptFetch();
+    };
+//check
+    const handleAnswerChange = (questionIndex, answer) => {
+        const updatedAnswers = [...userAnswers];
+        updatedAnswers[questionIndex] = answer;
+        setUserAnswers(updatedAnswers);
+    };
+
+    const handleQuizSubmit = (event) => {
+        event.preventDefault();
+        let calculatedScore = 0;
+        quiz.forEach((question, index) => {
+            if (userAnswers[index] === question.correct_answer) {
+                calculatedScore += 1;
+            }
+        });
+        setScore(calculatedScore);
+    };
+
+    const handleViewSavedQuiz = (index) => {
+        setViewSavedQuiz(savedQuizzes[index].quiz);
+    };
+
+    const handleDeleteQuiz = async (index) => {
+        console.log('index', index)
+        try {
+            const quizId = savedQuizzes[index]._id;
+            console.log('quiz id', quizId)
+            await deleteQuiz(quizId);
+
+            const newSavedQuizzes = savedQuizzes.filter((_, i) => i !== index);
+            setSavedQuizzes(newSavedQuizzes);
+            setViewSavedQuiz(null);
+            setMessage('Quiz deleted successfully!');
+        } catch (err) {
+            console.error('Error deleting quiz:', err);
+            setError('Failed to delete quiz. Please try again.');
+        }
+    };
+
+ 
+    const words = [
+        { text: "Engage your audience and improve knowledge retention with our powerful video to quiz conversion tool." },
+    ];
+
+    const items = [
+        {
+            title: "Upload Video",
+            description: "Paste the link to your YouTube video and let us do the rest.",
+            icon: <UploadIcon className="w-8 h-8 mb-4" />,
+        },
+        {
+            title: "Answer Quiz",
+            description: "Get generated quiz and attempt questions to check your knowledge.",
+            icon: <FilePenIcon className="w-8 h-8 mb-4" />,
+        },
+        {
+            title: "Saved Quizzes",
+            description: "Review the quiz whenever you want as it gets saved automatically.",
+            icon: <ShareIcon className="w-8 h-8 mb-4" />,
+        },
+    ];
 
     return (
-      <div className="w-full min-h-screen bg-background text-foreground">
+
+<div className="w-full min-h-screen bg-background text-foreground">
         <header className="container mx-auto px-4 md:px-6 py-6 flex items-center justify-between">
           <Link href="#" className="flex items-center gap-2" prefetch={false}>
             <PlayIcon className="w-6 h-6" />
@@ -219,7 +249,7 @@ export default function VideoToQuiz() {
                 onChange={(e) => setVideoUrl(e.target.value)}
                 className="max-w-md flex-1"
               />
-              <Button onClick={handleSubmit} >Convert</Button>
+              <Button onClick={handleSubmit} className="ml-4" >Convert</Button>
             </div>
           </div>
         </section>
@@ -335,10 +365,8 @@ export default function VideoToQuiz() {
         </nav>
       </footer>
     </div>
-  )
+    );
 }
-
-
 
 
   function FilePenIcon(props) {
