@@ -28,9 +28,10 @@
 import mongoose from 'mongoose';
 
 // Fallback MongoDB URI
-const DEFAULT_MONGO_URI = 'mongodb+srv://awdhesh1700:taWitFufuDSQLTUj@cluster0.nmqnlcy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
+//const DEFAULT_MONGO_URI = 'mongodb+srv://awdhesh1700:taWitFufuDSQLTUj@cluster0.nmqnlcy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 
-const MONGO_URI = process.env.MONGO_URI || DEFAULT_MONGO_URI;
+const MONGO_URI = process.env.MONGO_URI 
+//|| DEFAULT_MONGO_URI;
 console.log("Using MongoDB URI:", MONGO_URI);
 
 async function dbConnect() {
