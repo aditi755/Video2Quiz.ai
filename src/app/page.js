@@ -9,119 +9,138 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
 import { CardContainer, CardItem, CardBody } from "@/components/ui/3d-card";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import { HoverEffect} from "@/components/ui/card-hover-effect";
-import { fetchSavedQuizzes, saveQuiz, deleteQuiz, generateTranscript } from "@/lib/api";
+import {  saveQuiz, deleteQuiz, generateTranscript } from "@/lib/api";
 import { v4 as uuidv4 } from 'uuid';
-
+import { useRouter } from 'next/navigation';
+import { useUser, SignInButton } from '@clerk/nextjs';
+import GetStartedButton from "@/components/ui/GetStartedButton";
+import FAQSection from "@/components/ui/FaqSection";
 
 export default function VideoToQuiz() {
-    const [videoUrl, setVideoUrl] = useState('');
-    const [quiz, setQuiz] = useState(null);
-    const [userAnswers, setUserAnswers] = useState([]);
-    const [score, setScore] = useState(null);
-    const [error, setError] = useState('');
-    const [savedQuizzes, setSavedQuizzes] = useState([]);
-    const [viewSavedQuiz, setViewSavedQuiz] = useState(null);
-    const [loading, setLoading] = useState(false);
-    const [message, setMessage] = useState('');
-
-    // Fetch saved quizzes on component mount
-    useEffect(() => {
-        const fetchSavedQuizzesData = async () => {
-          try {
-            const quizzes = await fetchSavedQuizzes();
-            console.log('saved quiz', quizzes)
-            setSavedQuizzes(quizzes);
-          } catch (err) {
-            console.error('Error fetching saved quizzes:', err);
-            setError('Failed to fetch saved quizzes. Please try again.');
-          }
-        };
+//     const [videoUrl, setVideoUrl] = useState('');
+//     const [quiz, setQuiz] = useState(null);
+//     const [userAnswers, setUserAnswers] = useState([]);
+//     const [score, setScore] = useState(null);
+//     const [error, setError] = useState('');
+//     const [savedQuizzes, setSavedQuizzes] = useState([]);
+//     const [viewSavedQuiz, setViewSavedQuiz] = useState(null);
+//     const [loading, setLoading] = useState(false);
+//     const [message, setMessage] = useState('');
+//     // const router = useRouter();
+//     // const { isSignedIn } = useUser(); // Check if the user is signed in
+  
     
-        fetchSavedQuizzesData();
-      }, []); // Empty dependency array to run this effect only once
+
+    
+//     //   const handleClick = () => {
+//     //     if (isSignedIn) {
+//     //       // Redirect to the dashboard if the user is already signed in
+//     //       router.push('/dashboard');
+//     //     } else {
+//     //       // Open the Clerk sign-up/sign-in UI
+//     //       SignInButton(); 
+//     //     }
+//     //   };
+  
+
+//     // Fetch saved quizzes on component mount
+//     useEffect(() => {
+//         const fetchSavedQuizzesData = async () => {
+//           try {
+//             const quizzes = await fetchSavedQuizzes();
+//             console.log('saved quiz', quizzes)
+//             setSavedQuizzes(quizzes);
+//           } catch (err) {
+//             console.error('Error fetching saved quizzes:', err);
+//             setError('Failed to fetch saved quizzes. Please try again.');
+//           }
+//         };
+    
+//         fetchSavedQuizzesData();
+//       }, []); // Empty dependency array to run this effect only once
 
       
-      //logic
+//       //logic
       
-useEffect(() => {
-    if (!localStorage.getItem('userIdentifier')) {
-      localStorage.setItem('userIdentifier', uuidv4());
-    }
-  }, []);
+// useEffect(() => {
+//     if (!localStorage.getItem('userIdentifier')) {
+//       localStorage.setItem('userIdentifier', uuidv4());
+//     }
+//   }, []);
 
 
-    const handleTranscriptFetch = async () => {
-  setLoading(true);
-  try {
-    const data = await generateTranscript(videoUrl);
-    console.log('quiz data from page.js', data); // Check if data is valid
+//     const handleTranscriptFetch = async () => {
+//   setLoading(true);
+//   try {
+//     const data = await generateTranscript(videoUrl);
+//     console.log('quiz data from page.js', data); // Check if data is valid
 
-    if (Array.isArray(data) && data.length > 0) {
-      setQuiz(data);
-      setUserAnswers(new Array(data.length).fill(''));
+//     if (Array.isArray(data) && data.length > 0) {
+//       setQuiz(data);
+//       setUserAnswers(new Array(data.length).fill(''));
 
-      const userIdentifier = localStorage.getItem('userIdentifier');
-      const newQuiz = { userIdentifier, videoUrl, quiz: data };
-      console.log('newQuiz', newQuiz);
+//       const userIdentifier = localStorage.getItem('userIdentifier');
+//       const newQuiz = { userIdentifier, videoUrl, quiz: data };
+//       console.log('newQuiz', newQuiz);
       
-      await saveQuiz(newQuiz);
+//       await saveQuiz(newQuiz);
 
-      setSavedQuizzes(prev => [newQuiz, ...prev]);
-      setMessage('Quiz saved successfully!');
-    } else {
-      setError('Unexpected format of quiz questions');
-    }
-  } catch (error) {
-    console.error('Error fetching transcript:', error);
-    setError('Failed to fetch transcript. Please try again.');
-  } finally {
-    setLoading(false);
-  }
-};
+//       setSavedQuizzes(prev => [newQuiz, ...prev]);
+//       setMessage('Quiz saved successfully!');
+//     } else {
+//       setError('Unexpected format of quiz questions');
+//     }
+//   } catch (error) {
+//     console.error('Error fetching transcript:', error);
+//     setError('Failed to fetch transcript. Please try again.');
+//   } finally {
+//     setLoading(false);
+//   }
+// };
 
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        handleTranscriptFetch();
-    };
-//check
-    const handleAnswerChange = (questionIndex, answer) => {
-        const updatedAnswers = [...userAnswers];
-        updatedAnswers[questionIndex] = answer;
-        setUserAnswers(updatedAnswers);
-    };
+//     const handleSubmit = (event) => {
+//         event.preventDefault();
+//         handleTranscriptFetch();
+//     };
+// //check
+//     const handleAnswerChange = (questionIndex, answer) => {
+//         const updatedAnswers = [...userAnswers];
+//         updatedAnswers[questionIndex] = answer;
+//         setUserAnswers(updatedAnswers);
+//     };
 
-    const handleQuizSubmit = (event) => {
-        event.preventDefault();
-        let calculatedScore = 0;
-        quiz.forEach((question, index) => {
-            if (userAnswers[index] === question.correct_answer) {
-                calculatedScore += 1;
-            }
-        });
-        setScore(calculatedScore);
-    };
+//     const handleQuizSubmit = (event) => {
+//         event.preventDefault();
+//         let calculatedScore = 0;
+//         quiz.forEach((question, index) => {
+//             if (userAnswers[index] === question.correct_answer) {
+//                 calculatedScore += 1;
+//             }
+//         });
+//         setScore(calculatedScore);
+//     };
 
-    const handleViewSavedQuiz = (index) => {
-        setViewSavedQuiz(savedQuizzes[index].quiz);
-    };
+//     const handleViewSavedQuiz = (index) => {
+//         setViewSavedQuiz(savedQuizzes[index].quiz);
+//     };
 
-    const handleDeleteQuiz = async (index) => {
-        console.log('index', index)
-        try {
-            const quizId = savedQuizzes[index]._id;
-            console.log('quiz id', quizId)
-            await deleteQuiz(quizId);
+//     const handleDeleteQuiz = async (index) => {
+//         console.log('index', index)
+//         try {
+//             const quizId = savedQuizzes[index]._id;
+//             console.log('quiz id', quizId)
+//             await deleteQuiz(quizId);
 
-            const newSavedQuizzes = savedQuizzes.filter((_, i) => i !== index);
-            setSavedQuizzes(newSavedQuizzes);
-            setViewSavedQuiz(null);
-            setMessage('Quiz deleted successfully!');
-        } catch (err) {
-            console.error('Error deleting quiz:', err);
-            setError('Failed to delete quiz. Please try again.');
-        }
-    };
+//             const newSavedQuizzes = savedQuizzes.filter((_, i) => i !== index);
+//             setSavedQuizzes(newSavedQuizzes);
+//             setViewSavedQuiz(null);
+//             setMessage('Quiz deleted successfully!');
+//         } catch (err) {
+//             console.error('Error deleting quiz:', err);
+//             setError('Failed to delete quiz. Please try again.');
+//         }
+//     };
 
  
     const words = [
@@ -140,7 +159,7 @@ useEffect(() => {
             icon: <FilePenIcon className="w-8 h-8 mb-4" />,
         },
         {
-            title: "Saved Quizzes",
+            title: "Save Quizzes",
             description: "Review the quiz whenever you want as it gets saved automatically.",
             icon: <ShareIcon className="w-8 h-8 mb-4" />,
         },
@@ -168,7 +187,7 @@ useEffect(() => {
               Contact
             </Link>
           </nav>
-          <Button>Get Started</Button>
+         <GetStartedButton />
         </header>
         <main>
           <section className="container mx-auto px-4 md:px-6 py-12 md:py-24 flex flex-col md:flex-row items-center justify-between gap-8">
@@ -228,13 +247,13 @@ useEffect(() => {
               </div>
               <div className="bg-background p-6 rounded-lg shadow-sm">
                 <ShareIcon className="w-8 h-8 mb-4" />
-                <h3 className="text-xl font-bold mb-2">Saved Quizzes</h3>
+                <h3 className="text-xl font-bold mb-2">Save Quizzes</h3>
                 <p className="text-muted-foreground">Review the quiz whenever you want as it gets saved automatically.</p>
               </div>
             </div>
 
           </section>
-
+{/* 
 <section className="container mx-auto px-4 md:px-6 py-12 md:py-24 bg-muted">
           <div className="max-w-3xl mx-auto text-center space-y-4">
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Transform Your Learning Experience</h2>
@@ -244,17 +263,19 @@ useEffect(() => {
             <div className="flex justify-center">
               <Input
                 type="text"
-                placeholder="Enter YouTube video link"
-                value={videoUrl}
-                onChange={(e) => setVideoUrl(e.target.value)}
+                placeholder="Enter YouTube video link "
+                // value={videoUrl}
+                // onChange={(e) => setVideoUrl(e.target.value)}
                 className="max-w-md flex-1"
               />
-              <Button onClick={handleSubmit} className="ml-4" >Convert</Button>
+              <Button 
+              // onClick={handleSubmit} 
+              className="ml-4" >Convert</Button>
             </div>
           </div>
-        </section>
+        </section> */}
 
-        {loading ? (<div className="bg-muted text-center">Loading...</div>): 
+        {/* {loading ? (<div className="bg-muted text-center">Loading...</div>): 
 (quiz && (
           <section className="container mx-auto px-4 md:px-6 py-12 md:py-24">
             <div className="max-w-3xl mx-auto">
@@ -345,7 +366,9 @@ useEffect(() => {
               )}
             </div>
           </section>
-        )}
+        )} */}
+
+        <FAQSection />
       </main>
       <footer className="container mx-auto px-4 md:px-6 py-6 flex flex-col md:flex-row items-center justify-between">
         <div className="flex items-center gap-2">

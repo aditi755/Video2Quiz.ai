@@ -56,6 +56,17 @@
   }
 }
 
+/* Hide scrollbar for WebKit browsers */
+/* .scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge, and Firefox */
+/* .scrollbar-hidden {
+  -ms-overflow-style: none; /* IE and Edge */
+  /* scrollbar-width: none; /* Firefox */
+/* } */ 
+
 @layer base {
   * {
     @apply border-border;
@@ -64,3 +75,4 @@
     @apply bg-background text-foreground;
   }
 }
+

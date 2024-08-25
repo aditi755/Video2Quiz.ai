@@ -1,6 +1,11 @@
-export async function fetchSavedQuizzes() {
+export async function fetchSavedQuizzes(userId) {
+
+  if (!userId) {
+    throw new Error('User not authenticated');
+  }
+  
   try {
-    const response = await fetch('/api/getSavedQuiz', {
+    const response = await fetch(`/api/getSavedQuiz?userId=${userId}`, {
       method: 'GET',
     });
 
@@ -12,21 +17,23 @@ export async function fetchSavedQuizzes() {
 
     return result;
   } catch (error) {
-    console.error('Error fetching quizzes:', error);
+    console.error('Error fetching quizzes api.js:', error);
     throw new Error(error.message || 'An unexpected error occurred');
   }
 }
 
-//logic
+
 export async function saveQuiz(quizData) {
-  const userIdentifier = localStorage.getItem('userIdentifier');
-  console.log('api js savequiz', userIdentifier)
+  // No need to get userIdentifier from localStorage
+  console.log('userdata for save clerk', quizData.userIdentifier)
+  console.log(quizData.quiz)
+
   const response = await fetch('/api/saveQuiz', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ ...quizData, userIdentifier }),
+    body: JSON.stringify(quizData), // Already includes userIdentifier
   });
 
   const result = await response.json();
@@ -35,7 +42,6 @@ export async function saveQuiz(quizData) {
   }
   return result;
 }
-
 
   
   export async function deleteQuiz(id){
@@ -79,3 +85,17 @@ export async function generateTranscript(videoUrl) {
 }
 
 
+// quiz
+// : 
+// (5) [{…}, {…}, {…}, {…}, {…}]
+// userIdentifier
+// : 
+// "user_2jvPkU9SkQQfHpVUCUi0tAGSCim" -pic
+//user_2jvPkU9SkQQfHpVUCUi0tAGSCim -pic
+// user_2jvBYTEH3qlNRVmNSrS5UVXUxyW -simple
+// videoUrl
+// : 
+// "https://youtu.be/-iWaarLI7zI?si=bau7hW1VlMW0-nvz"
+// [[Prototype]]
+// : 
+// Object
