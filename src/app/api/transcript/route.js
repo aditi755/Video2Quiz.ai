@@ -3,8 +3,7 @@ import { YoutubeTranscript } from 'youtube-transcript';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import dbConnect from '@/lib/dbConnect';
 
-const apiKey = process.env.GOOGLE_GEMINI_API;
-// 'AIzaSyA4l9CPHtDAptuqpNB8J_c8u4hIPA-18sA';
+const apiKey = process.env.GOOGLE_GEMINI_API || 'AIzaSyA4l9CPHtDAptuqpNB8J_c8u4hIPA-18sA';
 
 async function fetchTranscript(videoUrl) {
   try {
