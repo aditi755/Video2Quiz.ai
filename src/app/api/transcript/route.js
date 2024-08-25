@@ -13,7 +13,12 @@ async function fetchTranscript(videoUrl) {
     console.log('Transcript fetched and cleaned');
     return cleanedTranscript;
   } catch (error) {
-    console.error('Failed to fetch transcript', error);
+    console.error('Failed to fetch transcript', {
+      message: error.message,
+      stack: error.stack,
+      name: error.name,
+      videoUrl
+    });
     throw new Error('Failed to fetch transcript');
   }
 }
