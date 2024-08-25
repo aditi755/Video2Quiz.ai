@@ -37,4 +37,32 @@ https://github.com/user-attachments/assets/332549fa-469f-47f9-9e63-82dab81ddf91
 4. **Get Your Score**: See your results instantly and identify areas where you can improve.
 5. **Save and Review**: Save quizzes for future review and keep track of your learning journey.
 
+## Installation
+
+Follow these steps to get the application up and running:
+
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/yourusername/Video2Quiz.ai.git
+   cd Video2Quiz.ai```
+
+2. **Go to root directory and install dependencies**:
+   ```bash
+   npm install
+
+3. **Set Up Environment Variables**:
+Create a .env.local file in the root directory of your project with the following content:
+```bash
+GOOGLE_GEMINI_API=your_google_gemini_api_key_here
+NEXT_PUBLIC_BASE_URL=http://localhost:3000
+MONGO_URI=your_mongodb_connection_uri_here
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key_here
+CLERK_SECRET_KEY=your_clerk_secret_key_here
+```
+
+4. Start the Development Server:
+ ```bash
+next dev
+```
+
 ---
