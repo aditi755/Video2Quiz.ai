@@ -44,7 +44,8 @@ Follow these steps to get the application up and running:
 1. **Clone the Repository**:
    ```bash
    git clone https://github.com/yourusername/Video2Quiz.ai.git
-   cd Video2Quiz.ai```
+   cd Video2Quiz.ai
+   ```
 
 2. **Go to root directory and install dependencies**:
    ```bash
