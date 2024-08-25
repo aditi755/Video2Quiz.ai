@@ -17,7 +17,17 @@ https://github.com/user-attachments/assets/332549fa-469f-47f9-9e63-82dab81ddf91
 - **Save and Review Quizzes**: Save quizzes to revisit later, and review your past quizzes to track your learning progress.
 - **Responsive Design**: Enjoy a seamless experience across all devices, whether you're on your phone, tablet, or desktop.
 
-Empower your learning with Video2Quiz.Ai – because understanding is just the beginning.
+
+## Tech Stack
+
+- **Next.js**: A React framework for building server-side rendered and statically generated applications.
+- **MongoDB**: A powerful non-relational database for storing user-generated quiz data.
+- **Mongoose**: Object-relational mapper for working with MongoDB.
+- **YouTube-transcript npm**: A npm package for generating the transcript from the YouTube video.
+- **Google Gemini API**: Generates questions from the YouTube video transcript.
+- **Clerk**: Authentication service for secure user management.
+- **Tailwind CSS**: A utility-first CSS framework for designing modern and responsive user interfaces.
+
 
 ## How It Works
 
@@ -26,6 +36,5 @@ Empower your learning with Video2Quiz.Ai – because understanding is just the b
 3. **Take the Quiz**: Answer the questions to the best of your ability.
 4. **Get Your Score**: See your results instantly and identify areas where you can improve.
 5. **Save and Review**: Save quizzes for future review and keep track of your learning journey.
-
 
 ---
