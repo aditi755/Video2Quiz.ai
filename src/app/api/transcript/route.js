@@ -8,7 +8,11 @@ const apiKey = 'AIzaSyA4l9CPHtDAptuqpNB8J_c8u4hIPA-18sA';
 async function fetchTranscript(videoUrl) {
   try {
     console.log(`Fetching transcript for video URL: ${videoUrl}`);
-    const transcript = await YoutubeTranscript.fetchTranscript(videoUrl);
+    const transcript = await YoutubeTranscript.fetchTranscript(videoUrl, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+        // Add other necessary headers if required
+      }} );
     const cleanedTranscript = transcript.map(entry => entry.text.replace(/&#?\w+;/g, ' ').trim()).join('\n');
     console.log('Transcript fetched and cleaned');
     return cleanedTranscript;
