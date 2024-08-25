@@ -1,7 +1,8 @@
 'use client';
 import React from 'react';
 // import { CheckIcon } from 'react-icons/check';
-import { Button } from './Button'; // Assuming you have a Button component
+import { Button } from './button';
+
 import {
   Card,
   CardHeader,
