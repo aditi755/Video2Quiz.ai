@@ -11,6 +11,7 @@ import {  saveQuiz, deleteQuiz, generateTranscript } from "@/lib/api";
 import { useUser, SignInButton } from '@clerk/nextjs';
 import GetStartedButton from "@/components/ui/GetStartedButton";
 import FAQSection from "@/components/ui/FaqSection";
+import HeroVideoDialog from "@/components/magicui/hero-video-dialog";
 
 export default function VideoToQuiz() {
  
@@ -80,19 +81,20 @@ export default function VideoToQuiz() {
       duration={1}
       clockwise={true}
     >
-      <CardContainer className="perspective">
-        
-          <CardItem className="bg-white p-4 rounded-lg shadow-lg">
-          <img
-          src="/pic.png"
-          width={600}
-          height={400}
-          alt="Hero Image"
-          className="rounded-lg overflow-hidden "
-        />
-          </CardItem>
-       
-      </CardContainer>
+        <div className="relative">
+      <HeroVideoDialog
+        className="block dark:hidden"
+        animationStyle="from-center"
+        videoSrc="https://www.youtube.com/embed/ES6Xivbb6SI"        thumbnailSrc="/pic.png"
+        thumbnailAlt="Hero Video"
+      />
+      <HeroVideoDialog
+        className="hidden dark:block"
+        animationStyle="from-center"
+        videoSrc="https://www.youtube.com/embed/ES6Xivbb6SI"        thumbnailSrc="/pic.png"
+        thumbnailAlt="Hero Video"
+      />
+    </div>
     </HoverBorderGradient>
 
 

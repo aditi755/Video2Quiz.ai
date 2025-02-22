@@ -5,6 +5,7 @@ import dbConnect from '@/lib/dbConnect';
 
 // const apiKey = 'AIzaSyA4l9CPHtDAptuqpNB8J_c8u4hIPA-18sA';
 const apiKey = process.env.GOOGLE_GEMINI_API
+
 async function fetchTranscript(videoUrl) {
   try {
     console.log(`Fetching transcript for video URL: ${videoUrl}`);
@@ -21,7 +22,8 @@ async function fetchTranscript(videoUrl) {
       message: error.message,
       stack: error.stack,
       name: error.name,
-      videoUrl
+      videoUrl, 
+      apiKey
     });
     throw new Error('Failed to fetch transcript');
   }
@@ -88,6 +90,7 @@ async function generateQuizQuestions(description) {
   }
 }
 
+//flow starts from here
 export async function POST(req) {
   const { videoUrl } = await req.json();
   console.log("Received video URL:", videoUrl);
@@ -97,7 +100,10 @@ export async function POST(req) {
   }
 
   try {
+    console.log('Attempting to fetch transcript...');
     const transcriptText = await fetchTranscript(videoUrl);
+    console.log('Transcript fetched successfully:', transcriptText);
+
     if (!transcriptText) {
       console.error('Failed to fetch transcript in /transcript');
       return NextResponse.json({ error: 'Failed to fetch transcript' }, { status: 500 });
@@ -112,4 +118,8 @@ export async function POST(req) {
     return NextResponse.json({ error: 'Failed to generate quiz questions from /api/transcript' }, { status: 500 });
   }
 }
+
+//maybe use officla youtube data api to fetch transcript / subtitile
+// use a proxy service as in github issues and stackoverflow
+//   PROXY_URL=http://public-proxy-server.com:8080
 
